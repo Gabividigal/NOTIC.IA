@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  nome      String
+  senha     String
+  plano     Plan     @default(FREE)
+  createdAt DateTime @default(now())
+
+  temas        UserTheme[]
+  chatMessages ChatMessage[]
+
+  @@map("users")
+}
+
+model Theme {
+  id   String @id @default(cuid())
+  nome String @unique
+
+  usuarios UserTheme[]
+  noticias News[]
+
+  @@map("themes")
+}
+
+model UserTheme {
+  id      String @id @default(cuid())
+  userId  String
+  themeId String
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, themeId])
+  @@map("user_themes")
+}
+
+model News {
+  id             String   @id @default(cuid())
+  titulo         String
+  resumoIA       String   @db.Text
+  linkFonte      String
+  nomeFonte      String
+  dataPublicacao DateTime
+  createdAt      DateTime @default(now())
+
+  themeId String
+  tema    Theme @relation(fields: [themeId], references: [id])
+
+  chatMessages ChatMessage[]
+
+  @@map("news")
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  pergunta  String   @db.Text
+  resposta  String   @db.Text
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  newsId String
+  news   News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
