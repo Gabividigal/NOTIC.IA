@@ -1,13 +1,43 @@
-import Logo from "@/components/Logo";
+import Header from "@/components/Header";
+import NewsCard from "@/components/NewsCard";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const noticias = await prisma.news.findMany({
+    include: { tema: true },
+    orderBy: { dataPublicacao: "desc" },
+  });
+
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-4 bg-zinc-50 px-4 text-center dark:bg-black">
-      <Logo />
-      <p className="max-w-md text-zinc-600 dark:text-zinc-400">
-        Notícias resumidas por IA, personalizadas por tema, com um chat
-        embutido para você tirar dúvidas sobre cada matéria.
-      </p>
-    </main>
+    <>
+      <Header />
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-zinc-50">Feed de notícias</h1>
+          <p className="mt-1 text-sm text-zinc-400">
+            Resumidas por IA, atualizadas de todos os temas. Sem necessidade de login.
+          </p>
+        </div>
+
+        {noticias.length === 0 ? (
+          <p className="text-zinc-400">Nenhuma notícia disponível no momento.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {noticias.map((noticia) => (
+              <NewsCard
+                key={noticia.id}
+                temaNome={noticia.tema.nome}
+                titulo={noticia.titulo}
+                resumo={noticia.resumoIA}
+                fonte={noticia.nomeFonte}
+                data={noticia.dataPublicacao}
+              />
+            ))}
+          </div>
+        )}
+      </main>
+    </>
   );
 }
