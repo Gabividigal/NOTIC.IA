@@ -16,6 +16,39 @@ const inputClass =
 
 const MAX_TEMAS = 3;
 
+const AREAS_ATUACAO = [
+  "Administrador(a)",
+  "Advogado(a)",
+  "Analista de Marketing",
+  "Analista de Sistemas",
+  "Arquiteto(a)",
+  "Assistente Social",
+  "Autônomo(a)",
+  "Contador(a)",
+  "Dentista",
+  "Desenvolvedor(a) de Software",
+  "Designer",
+  "Economista",
+  "Enfermeiro(a)",
+  "Engenheiro(a)",
+  "Estudante",
+  "Farmacêutico(a)",
+  "Fisioterapeuta",
+  "Gerente de Projetos",
+  "Jornalista",
+  "Médico(a)",
+  "Nutricionista",
+  "Produtor(a) de Conteúdo",
+  "Professor(a)",
+  "Psicólogo(a)",
+  "Publicitário(a)",
+  "Recursos Humanos",
+  "Servidor(a) Público(a)",
+  "Vendedor(a)",
+  "Veterinário(a)",
+  "Outro",
+] as const;
+
 export default function CadastroForm({ temas }: { temas: Tema[] }) {
   const router = useRouter();
   const [nome, setNome] = useState("");
@@ -193,15 +226,22 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
           <label htmlFor="areaAtuacao" className="text-sm font-medium text-zinc-300">
             Área de atuação
           </label>
-          <input
+          <select
             id="areaAtuacao"
-            type="text"
             required
             value={areaAtuacao}
             onChange={(e) => setAreaAtuacao(e.target.value)}
-            className={inputClass}
-            placeholder="Ex: Marketing, Direito, Engenharia..."
-          />
+            className={`${inputClass} ${areaAtuacao ? "text-zinc-100" : "text-zinc-500"}`}
+          >
+            <option value="" disabled>
+              Selecione sua área de atuação
+            </option>
+            {AREAS_ATUACAO.map((area) => (
+              <option key={area} value={area} className="text-zinc-100">
+                {area}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
