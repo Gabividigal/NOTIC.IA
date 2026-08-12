@@ -16,12 +16,14 @@ enum Plan {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  nome      String
-  senha     String
-  plano     Plan     @default(FREE)
-  createdAt DateTime @default(now())
+  id             String   @id @default(cuid())
+  email          String   @unique
+  nome           String
+  senha          String
+  dataNascimento DateTime
+  areaAtuacao    String
+  plano          Plan     @default(FREE)
+  createdAt      DateTime @default(now())
 
   temas        UserTheme[]
   chatMessages ChatMessage[]

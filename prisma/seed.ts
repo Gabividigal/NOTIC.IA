@@ -2,7 +2,23 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const temas = ["Economia", "Agronegócio", "Esportes", "Política", "Tecnologia"];
+const temas = [
+  "Economia",
+  "Agronegócio",
+  "Esportes",
+  "Política",
+  "Tecnologia",
+  "Saúde",
+  "Educação",
+  "Meio Ambiente",
+  "Entretenimento",
+  "Ciência",
+  "Internacional",
+  "Direito",
+  "Startups",
+  "Imóveis",
+  "Turismo",
+];
 
 function diasAtras(dias: number) {
   const data = new Date();
