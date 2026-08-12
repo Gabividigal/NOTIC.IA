@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { registrarUsuario } from "@/app/cadastro/actions";
+import { AREAS_ATUACAO } from "@/lib/areasAtuacao";
 
 interface Tema {
   id: string;
@@ -15,39 +16,6 @@ const inputClass =
   "w-full rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
 
 const MAX_TEMAS = 3;
-
-const AREAS_ATUACAO = [
-  "Administrador(a)",
-  "Advogado(a)",
-  "Analista de Marketing",
-  "Analista de Sistemas",
-  "Arquiteto(a)",
-  "Assistente Social",
-  "Autônomo(a)",
-  "Contador(a)",
-  "Dentista",
-  "Desenvolvedor(a) de Software",
-  "Designer",
-  "Economista",
-  "Enfermeiro(a)",
-  "Engenheiro(a)",
-  "Estudante",
-  "Farmacêutico(a)",
-  "Fisioterapeuta",
-  "Gerente de Projetos",
-  "Jornalista",
-  "Médico(a)",
-  "Nutricionista",
-  "Produtor(a) de Conteúdo",
-  "Professor(a)",
-  "Psicólogo(a)",
-  "Publicitário(a)",
-  "Recursos Humanos",
-  "Servidor(a) Público(a)",
-  "Vendedor(a)",
-  "Veterinário(a)",
-  "Outro",
-] as const;
 
 export default function CadastroForm({ temas }: { temas: Tema[] }) {
   const router = useRouter();
