@@ -14,7 +14,7 @@ const BENEFICIOS_PRO = [
   "Histórico de conversas do chat salvo",
 ];
 
-export default function UpgradeProModal() {
+export default function UpgradeProModal({ onAbrir }: { onAbrir?: () => void }) {
   const [aberto, setAberto] = useState(false);
   const [mensagem, setMensagem] = useState<string | null>(null);
 
@@ -25,6 +25,7 @@ export default function UpgradeProModal() {
   function abrir() {
     setMensagem(null);
     setAberto(true);
+    onAbrir?.();
   }
 
   return (

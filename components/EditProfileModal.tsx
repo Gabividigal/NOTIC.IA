@@ -10,30 +10,44 @@ import { AREAS_ATUACAO } from "@/lib/areasAtuacao";
 interface EditProfileModalProps {
   nomeAtual: string;
   areaAtuacaoAtual: string;
+  dataNascimentoAtual: string;
+  onAbrir?: () => void;
 }
 
 const inputClass =
   "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
 
-export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditProfileModalProps) {
+export default function EditProfileModal({
+  nomeAtual,
+  areaAtuacaoAtual,
+  dataNascimentoAtual,
+  onAbrir,
+}: EditProfileModalProps) {
   const router = useRouter();
   const { update } = useSession();
   const [aberto, setAberto] = useState(false);
   const [nome, setNome] = useState(nomeAtual);
   const [areaAtuacao, setAreaAtuacao] = useState(areaAtuacaoAtual);
+  const [dataNascimento, setDataNascimento] = useState(dataNascimentoAtual);
   const [erro, setErro] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function abrir() {
     setNome(nomeAtual);
     setAreaAtuacao(areaAtuacaoAtual);
+    setDataNascimento(dataNascimentoAtual);
     setErro(null);
     setAberto(true);
+    onAbrir?.();
   }
 
   function salvar() {
     if (!nome.trim()) {
       setErro("Nome é obrigatório.");
+      return;
+    }
+    if (!dataNascimento) {
+      setErro("Data de nascimento é obrigatória.");
       return;
     }
 
@@ -42,7 +56,7 @@ export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditPr
       const resposta = await fetch("/api/perfil", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, areaAtuacao }),
+        body: JSON.stringify({ nome, areaAtuacao, dataNascimento }),
       });
 
       const dados = (await resposta.json().catch(() => ({}))) as { erro?: string };
@@ -63,10 +77,10 @@ export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditPr
       <button
         type="button"
         onClick={abrir}
-        aria-label="Editar perfil"
-        className="absolute top-4 right-4 rounded-full border border-navy-700 p-1.5 text-zinc-400 transition hover:border-navy-500 hover:text-zinc-100"
+        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-300 transition hover:bg-navy-900 hover:text-zinc-100"
       >
-        <Pencil size={14} />
+        <Pencil size={15} />
+        Editar perfil
       </button>
 
       <Modal aberto={aberto} onFechar={() => setAberto(false)} titulo="Editar perfil">
@@ -80,6 +94,19 @@ export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditPr
               type="text"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="edit-nascimento" className="text-sm font-medium text-zinc-300">
+              Data de nascimento
+            </label>
+            <input
+              id="edit-nascimento"
+              type="date"
+              value={dataNascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
               className={inputClass}
             />
           </div>
@@ -114,7 +141,7 @@ export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditPr
             </button>
             <button
               type="button"
-              disabled={!nome.trim() || isPending}
+              disabled={!nome.trim() || !dataNascimento || isPending}
               onClick={salvar}
               className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >

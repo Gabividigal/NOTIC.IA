@@ -5,9 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import LogoutButton from "@/components/LogoutButton";
 import NewsCard from "@/components/NewsCard";
-import EditProfileModal from "@/components/EditProfileModal";
 import EditInterestsModal from "@/components/EditInterestsModal";
-import UpgradeProModal from "@/components/UpgradeProModal";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -66,46 +64,7 @@ export default async function UserPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
-      <div className="mx-auto flex max-w-3xl flex-col gap-4 md:flex-row md:items-stretch">
-        <div className="relative flex flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-navy-800 bg-navy-900/50 p-6 text-center">
-          <EditProfileModal nomeAtual={usuario.nome} areaAtuacaoAtual={usuario.areaAtuacao} />
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-xl font-bold text-white">
-            {usuario.nome.charAt(0).toUpperCase()}
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-zinc-50">{usuario.nome}</h1>
-            <p className="text-sm text-zinc-400">{usuario.email}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-1 flex-col gap-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5">
-          <div>
-            <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
-              Área de atuação
-            </p>
-            <p className="mt-1 text-sm text-zinc-200">{usuario.areaAtuacao}</p>
-          </div>
-          <div>
-            <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
-              Data de nascimento
-            </p>
-            <p className="mt-1 text-sm text-zinc-200">
-              {usuario.dataNascimento.toLocaleDateString("pt-BR", { timeZone: "UTC" })}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">Plano</p>
-            <div className="mt-1 flex items-center gap-3">
-              <p className="text-sm text-zinc-200">
-                {usuario.plano === "PRO" ? "PRO" : "Gratuito"}
-              </p>
-              {usuario.plano !== "PRO" && <UpgradeProModal />}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section className="mt-10">
+      <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold text-zinc-50">Seus interesses</h2>
           <EditInterestsModal
