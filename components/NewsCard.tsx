@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ThemeBadge from "@/components/ThemeBadge";
 import NewsCardActions from "@/components/NewsCardActions";
 
@@ -41,12 +42,16 @@ export default function NewsCard({
           initialFavorito={favorito}
         />
       </div>
-      <h2 className="text-lg font-semibold text-zinc-50">{titulo}</h2>
-      <p className="text-sm leading-relaxed text-zinc-400">{resumo}</p>
-      <div className="mt-auto flex items-center justify-between pt-2 text-xs text-zinc-500">
-        <span>{fonte}</span>
-        <span>{dataFormatada}</span>
-      </div>
+      <Link href={`/noticia/${id}`} className="contents">
+        <h2 className="text-lg font-semibold text-zinc-50 transition hover:text-blue-400">
+          {titulo}
+        </h2>
+        <p className="text-sm leading-relaxed text-zinc-400">{resumo}</p>
+        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-zinc-500">
+          <span>{fonte}</span>
+          <span>{dataFormatada}</span>
+        </div>
+      </Link>
     </article>
   );
 }
