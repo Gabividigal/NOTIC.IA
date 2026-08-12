@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Search as SearchIcon } from "lucide-react";
+import { getServerSession } from "next-auth";
 import NewsCard from "@/components/NewsCard";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { buscarMarcadores } from "@/lib/marcadores";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -14,9 +17,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { q = "", tema = "" } = await searchParams;
   const termo = q.trim();
 
-  const noticias =
+  const session = await getServerSession(authOptions);
+
+  const [noticias, { readLaterIds, favoritoIds }] = await Promise.all([
     termo || tema
-      ? await prisma.news.findMany({
+      ? prisma.news.findMany({
           where: {
             AND: [
               termo
@@ -33,7 +38,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           include: { tema: true },
           orderBy: { dataPublicacao: "desc" },
         })
-      : [];
+      : Promise.resolve([]),
+    buscarMarcadores(session?.user?.id),
+  ]);
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
@@ -81,11 +88,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           {noticias.map((noticia) => (
             <NewsCard
               key={noticia.id}
+              id={noticia.id}
               temaNome={noticia.tema.nome}
               titulo={noticia.titulo}
               resumo={noticia.resumoIA}
               fonte={noticia.nomeFonte}
               data={noticia.dataPublicacao}
+              autenticado={Boolean(session?.user)}
+              readLater={readLaterIds.has(noticia.id)}
+              favorito={favoritoIds.has(noticia.id)}
             />
           ))}
         </div>

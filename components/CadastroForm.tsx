@@ -123,7 +123,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="email" className="text-sm font-medium text-zinc-300">
-          Email
+          E-mail
         </label>
         <input
           id="email"

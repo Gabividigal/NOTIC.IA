@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { Home, TrendingUp, Search, User } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/trending", label: "Trend Topics", icon: TrendingUp },
-  { href: "/search", label: "Search", icon: Search },
-  { href: "/user", label: "User", icon: User },
+  { href: "/", label: "Início", icon: Home },
+  { href: "/trending", label: "Em Alta", icon: TrendingUp },
+  { href: "/search", label: "Buscar", icon: Search },
+  { href: "/user", label: "Perfil", icon: User },
 ] as const;
 
 function isActive(pathname: string, href: string) {

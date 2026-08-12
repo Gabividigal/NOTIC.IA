@@ -28,6 +28,8 @@ model User {
 
   temas        UserTheme[]
   chatMessages ChatMessage[]
+  readLaters   ReadLater[]
+  favorites    Favorite[]
 
   @@map("users")
 }
@@ -67,8 +69,36 @@ model News {
   tema    Theme @relation(fields: [themeId], references: [id])
 
   chatMessages ChatMessage[]
+  readLaters   ReadLater[]
+  favorites    Favorite[]
 
   @@map("news")
+}
+
+model ReadLater {
+  id        String   @id @default(cuid())
+  userId    String
+  newsId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, newsId])
+  @@map("read_later")
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  newsId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, newsId])
+  @@map("favorites")
 }
 
 model ChatMessage {

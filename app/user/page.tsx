@@ -4,7 +4,7 @@ import { UserRound } from "lucide-react";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import LogoutButton from "@/components/LogoutButton";
-import ThemeBadge from "@/components/ThemeBadge";
+import NewsCard from "@/components/NewsCard";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -33,7 +33,17 @@ export default async function UserPage() {
 
   const usuario = await prisma.user.findUnique({
     where: { id: session.user.id },
-    include: { temas: { include: { theme: true } } },
+    include: {
+      temas: { include: { theme: true } },
+      readLaters: {
+        include: { news: { include: { tema: true } } },
+        orderBy: { createdAt: "desc" },
+      },
+      favorites: {
+        include: { news: { include: { tema: true } } },
+        orderBy: { createdAt: "desc" },
+      },
+    },
   });
 
   if (!usuario) {
@@ -45,9 +55,12 @@ export default async function UserPage() {
     );
   }
 
+  const readLaterIds = new Set(usuario.readLaters.map((item) => item.newsId));
+  const favoritoIds = new Set(usuario.favorites.map((item) => item.newsId));
+
   return (
-    <main className="mx-auto w-full max-w-lg flex-1 px-4 py-12">
-      <div className="flex flex-col items-center gap-3 text-center">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
+      <div className="mx-auto flex max-w-lg flex-col items-center gap-3 text-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-xl font-bold text-white">
           {usuario.nome.charAt(0).toUpperCase()}
         </div>
@@ -57,7 +70,7 @@ export default async function UserPage() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+      <div className="mx-auto mt-8 flex max-w-lg flex-col gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
         <div>
           <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
             Área de atuação
@@ -78,19 +91,81 @@ export default async function UserPage() {
             {usuario.plano === "PRO" ? "PRO" : "Gratuito"}
           </p>
         </div>
-        <div>
-          <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
-            Temas de interesse
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {usuario.temas.map(({ theme }) => (
-              <ThemeBadge key={theme.id} nome={theme.nome} />
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div className="mt-6 flex justify-center">
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-zinc-50">Seus interesses</h2>
+        <p className="mt-1 text-sm text-zinc-400">
+          Toque em um tema para ver o feed filtrado só com ele.
+        </p>
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {usuario.temas.map(({ theme }) => (
+            <Link
+              key={theme.id}
+              href={`/interesse/${encodeURIComponent(theme.nome)}`}
+              className="flex items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-5 text-center font-medium text-zinc-100 transition hover:border-blue-500/50 hover:text-blue-400"
+            >
+              {theme.nome}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-zinc-50">Ler depois</h2>
+        <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou para ler com calma.</p>
+        {usuario.readLaters.length === 0 ? (
+          <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-sm text-zinc-400">
+            Você ainda não marcou nenhuma notícia para ler depois.
+          </p>
+        ) : (
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {usuario.readLaters.map(({ news }) => (
+              <NewsCard
+                key={news.id}
+                id={news.id}
+                temaNome={news.tema.nome}
+                titulo={news.titulo}
+                resumo={news.resumoIA}
+                fonte={news.nomeFonte}
+                data={news.dataPublicacao}
+                autenticado
+                readLater={readLaterIds.has(news.id)}
+                favorito={favoritoIds.has(news.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-zinc-50">Favoritos</h2>
+        <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou como favoritas.</p>
+        {usuario.favorites.length === 0 ? (
+          <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-sm text-zinc-400">
+            Você ainda não adicionou nenhum favorito.
+          </p>
+        ) : (
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {usuario.favorites.map(({ news }) => (
+              <NewsCard
+                key={news.id}
+                id={news.id}
+                temaNome={news.tema.nome}
+                titulo={news.titulo}
+                resumo={news.resumoIA}
+                fonte={news.nomeFonte}
+                data={news.dataPublicacao}
+                autenticado
+                readLater={readLaterIds.has(news.id)}
+                favorito={favoritoIds.has(news.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <div className="mt-10 flex justify-center">
         <LogoutButton />
       </div>
     </main>
