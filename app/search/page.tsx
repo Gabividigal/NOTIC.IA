@@ -4,6 +4,7 @@ import NewsCard from "@/components/NewsCard";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string; tema?: string }>;

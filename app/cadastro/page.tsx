@@ -2,6 +2,7 @@ import CadastroForm from "@/components/CadastroForm";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export default async function CadastroPage() {
   const temas = await prisma.theme.findMany({ orderBy: { nome: "asc" } });

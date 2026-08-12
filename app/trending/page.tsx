@@ -3,6 +3,7 @@ import ThemeBadge from "@/components/ThemeBadge";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export default async function TrendingPage() {
   const temas = await prisma.theme.findMany({

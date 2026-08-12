@@ -7,6 +7,7 @@ import LogoutButton from "@/components/LogoutButton";
 import ThemeBadge from "@/components/ThemeBadge";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export default async function UserPage() {
   const session = await getServerSession(authOptions);
