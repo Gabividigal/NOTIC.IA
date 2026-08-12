@@ -21,14 +21,14 @@ export default function Navigation() {
   return (
     <>
       {/* Desktop: barra horizontal ao lado do Header */}
-      <ul className="hidden items-center gap-6 md:flex">
+      <ul className="hidden items-center gap-8 md:flex">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const active = isActive(pathname, href);
           return (
             <li key={href}>
               <Link
                 href={href}
-                className={`flex items-center gap-1.5 text-sm font-medium transition ${
+                className={`flex items-center gap-2 text-sm font-medium transition ${
                   active ? "text-blue-400" : "text-zinc-400 hover:text-zinc-200"
                 }`}
               >
