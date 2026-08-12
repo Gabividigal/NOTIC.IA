@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { UserCheck } from "lucide-react";
-import ThemeBadge from "@/components/ThemeBadge";
 import SeguindoFeed from "@/components/SeguindoFeed";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -61,30 +60,7 @@ export default async function SeguindoPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-      <div className="mb-6">
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-bold text-zinc-50">Seguindo</h1>
-          {temasSeguidos.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-zinc-600">·</span>
-              {temasSeguidos.map((tema) => (
-                <ThemeBadge key={tema.id} nome={tema.nome} />
-              ))}
-            </div>
-          )}
-        </div>
-        <p className="mt-1 text-sm text-zinc-400">
-          Notícias dos temas que você escolheu acompanhar.
-        </p>
-      </div>
-
-      {noticiasFormatadas.length === 0 ? (
-        <p className="text-zinc-400">
-          Nenhuma notícia disponível para os seus temas de interesse no momento.
-        </p>
-      ) : (
-        <SeguindoFeed noticias={noticiasFormatadas} temasSeguidos={temasSeguidos} />
-      )}
+      <SeguindoFeed noticias={noticiasFormatadas} temasSeguidos={temasSeguidos} />
     </main>
   );
 }
