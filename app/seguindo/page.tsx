@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { UserCheck } from "lucide-react";
-import NewsCard from "@/components/NewsCard";
+import ThemeBadge from "@/components/ThemeBadge";
+import SeguindoFeed from "@/components/SeguindoFeed";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buscarMarcadores } from "@/lib/marcadores";
@@ -32,9 +33,10 @@ export default async function SeguindoPage() {
 
   const usuario = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { temas: { select: { themeId: true } } },
+    select: { temas: { select: { theme: { select: { id: true, nome: true } } } } },
   });
-  const themeIds = usuario?.temas.map((tema) => tema.themeId) ?? [];
+  const temasSeguidos = usuario?.temas.map(({ theme }) => theme) ?? [];
+  const themeIds = temasSeguidos.map((tema) => tema.id);
 
   const [noticias, { readLaterIds, favoritoIds }] = await Promise.all([
     prisma.news.findMany({
@@ -45,36 +47,43 @@ export default async function SeguindoPage() {
     buscarMarcadores(session.user.id),
   ]);
 
+  const noticiasFormatadas = noticias.map((noticia) => ({
+    id: noticia.id,
+    titulo: noticia.titulo,
+    resumo: noticia.resumoIA,
+    fonte: noticia.nomeFonte,
+    data: noticia.dataPublicacao,
+    temaId: noticia.themeId,
+    temaNome: noticia.tema.nome,
+    readLater: readLaterIds.has(noticia.id),
+    favorito: favoritoIds.has(noticia.id),
+  }));
+
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-50">Seguindo</h1>
+      <div className="mb-6">
+        <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-2xl font-bold text-zinc-50">Seguindo</h1>
+          {temasSeguidos.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-zinc-600">·</span>
+              {temasSeguidos.map((tema) => (
+                <ThemeBadge key={tema.id} nome={tema.nome} />
+              ))}
+            </div>
+          )}
+        </div>
         <p className="mt-1 text-sm text-zinc-400">
           Notícias dos temas que você escolheu acompanhar.
         </p>
       </div>
 
-      {noticias.length === 0 ? (
+      {noticiasFormatadas.length === 0 ? (
         <p className="text-zinc-400">
           Nenhuma notícia disponível para os seus temas de interesse no momento.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((noticia) => (
-            <NewsCard
-              key={noticia.id}
-              id={noticia.id}
-              temaNome={noticia.tema.nome}
-              titulo={noticia.titulo}
-              resumo={noticia.resumoIA}
-              fonte={noticia.nomeFonte}
-              data={noticia.dataPublicacao}
-              autenticado
-              readLater={readLaterIds.has(noticia.id)}
-              favorito={favoritoIds.has(noticia.id)}
-            />
-          ))}
-        </div>
+        <SeguindoFeed noticias={noticiasFormatadas} temasSeguidos={temasSeguidos} />
       )}
     </main>
   );
