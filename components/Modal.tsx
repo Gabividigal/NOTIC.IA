@@ -8,9 +8,16 @@ interface ModalProps {
   onFechar: () => void;
   titulo: string;
   children: ReactNode;
+  largura?: string;
 }
 
-export default function Modal({ aberto, onFechar, titulo, children }: ModalProps) {
+export default function Modal({
+  aberto,
+  onFechar,
+  titulo,
+  children,
+  largura = "max-w-md",
+}: ModalProps) {
   useEffect(() => {
     if (!aberto) return;
 
@@ -39,7 +46,7 @@ export default function Modal({ aberto, onFechar, titulo, children }: ModalProps
         aria-modal="true"
         aria-labelledby="modal-titulo"
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-950 p-6 shadow-xl"
+        className={`w-full ${largura} rounded-xl border border-zinc-800 bg-zinc-950 p-6 shadow-xl`}
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 id="modal-titulo" className="text-lg font-semibold text-zinc-50">

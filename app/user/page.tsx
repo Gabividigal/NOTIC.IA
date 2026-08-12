@@ -7,6 +7,7 @@ import LogoutButton from "@/components/LogoutButton";
 import NewsCard from "@/components/NewsCard";
 import EditProfileModal from "@/components/EditProfileModal";
 import EditInterestsModal from "@/components/EditInterestsModal";
+import UpgradeProModal from "@/components/UpgradeProModal";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -94,9 +95,12 @@ export default async function UserPage() {
           </div>
           <div>
             <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">Plano</p>
-            <p className="mt-1 text-sm text-zinc-200">
-              {usuario.plano === "PRO" ? "PRO" : "Gratuito"}
-            </p>
+            <div className="mt-1 flex items-center gap-3">
+              <p className="text-sm text-zinc-200">
+                {usuario.plano === "PRO" ? "PRO" : "Gratuito"}
+              </p>
+              {usuario.plano !== "PRO" && <UpgradeProModal />}
+            </div>
           </div>
         </div>
       </div>
