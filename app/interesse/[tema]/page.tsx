@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import NewsCard from "@/components/NewsCard";
+import BackButton from "@/components/BackButton";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buscarMarcadores } from "@/lib/marcadores";
@@ -33,7 +34,9 @@ export default async function InteressePage({ params }: InteressePageProps) {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-      <div className="mb-8">
+      <BackButton />
+
+      <div className="mt-6 mb-8">
         <h1 className="text-2xl font-bold text-zinc-50">{tema.nome}</h1>
         <p className="mt-1 text-sm text-zinc-400">
           Notícias sobre {tema.nome}, resumidas por IA.

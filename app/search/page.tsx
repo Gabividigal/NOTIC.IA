@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Search as SearchIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import NewsCard from "@/components/NewsCard";
+import BackButton from "@/components/BackButton";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buscarMarcadores } from "@/lib/marcadores";
@@ -44,7 +45,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-      <div className="mb-8">
+      {tema && <BackButton />}
+
+      <div className={tema ? "mt-6 mb-8" : "mb-8"}>
         <h1 className="text-2xl font-bold text-zinc-50">Buscar notícias</h1>
 
         <form action="/search" method="GET" className="mt-4 flex items-center gap-2">
