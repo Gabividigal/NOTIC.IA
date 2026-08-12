@@ -76,7 +76,7 @@ export default function EditInterestsModal({
         type="button"
         onClick={abrir}
         aria-label="Editar interesses"
-        className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-zinc-100"
+        className="flex h-6 w-6 items-center justify-center rounded-full border border-navy-700 text-zinc-400 transition hover:border-navy-500 hover:text-zinc-100"
       >
         <Plus size={14} />
       </button>
@@ -115,8 +115,8 @@ export default function EditInterestsModal({
                     selecionado
                       ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white ring-transparent"
                       : desabilitado
-                        ? "cursor-not-allowed text-zinc-600 ring-zinc-800"
-                        : "text-zinc-300 ring-zinc-700 hover:ring-zinc-500"
+                        ? "cursor-not-allowed text-zinc-600 ring-navy-800"
+                        : "text-zinc-300 ring-navy-700 hover:ring-navy-500"
                   }`}
                 >
                   {selecionado && <Check size={12} />}

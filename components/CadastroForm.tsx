@@ -13,7 +13,7 @@ interface Tema {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
+  "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
 
 const MAX_TEMAS = 3;
 
@@ -238,8 +238,8 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
                   selecionado
                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white ring-transparent"
                     : desabilitado
-                      ? "cursor-not-allowed text-zinc-600 ring-zinc-800"
-                      : "text-zinc-300 ring-zinc-700 hover:ring-zinc-500"
+                      ? "cursor-not-allowed text-zinc-600 ring-navy-800"
+                      : "text-zinc-300 ring-navy-700 hover:ring-navy-500"
                 }`}
               >
                 {tema.nome}

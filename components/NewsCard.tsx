@@ -32,7 +32,7 @@ export default function NewsCard({
   }).format(data);
 
   return (
-    <article className="flex flex-col gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-zinc-700">
+    <article className="flex flex-col gap-3 rounded-xl border border-navy-800 bg-navy-900/50 p-5 transition hover:border-navy-700">
       <div className="flex items-start justify-between gap-2">
         <ThemeBadge nome={temaNome} />
         <NewsCardActions

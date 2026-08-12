@@ -9,7 +9,7 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-zinc-800 bg-black/70 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-navy-800 bg-navy-950/70 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
         <Logo />
         <Navigation />

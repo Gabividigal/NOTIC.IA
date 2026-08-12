@@ -39,14 +39,14 @@ export default function Modal({
     <div
       role="presentation"
       onClick={onFechar}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/70 px-4 py-8"
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-titulo"
         onClick={(event) => event.stopPropagation()}
-        className={`w-full ${largura} rounded-xl border border-zinc-800 bg-zinc-950 p-6 shadow-xl`}
+        className={`w-full ${largura} rounded-xl border border-navy-800 bg-navy-950 p-6 shadow-xl`}
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 id="modal-titulo" className="text-lg font-semibold text-zinc-50">

@@ -13,7 +13,7 @@ interface EditProfileModalProps {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
+  "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
 
 export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditProfileModalProps) {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function EditProfileModal({ nomeAtual, areaAtuacaoAtual }: EditPr
         type="button"
         onClick={abrir}
         aria-label="Editar perfil"
-        className="absolute top-4 right-4 rounded-full border border-zinc-700 p-1.5 text-zinc-400 transition hover:border-zinc-500 hover:text-zinc-100"
+        className="absolute top-4 right-4 rounded-full border border-navy-700 p-1.5 text-zinc-400 transition hover:border-navy-500 hover:text-zinc-100"
       >
         <Pencil size={14} />
       </button>

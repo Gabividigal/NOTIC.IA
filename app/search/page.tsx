@@ -61,7 +61,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               name="q"
               defaultValue={q}
               placeholder="Buscar por título ou resumo..."
-              className="w-full rounded-full border border-zinc-800 bg-zinc-900/50 py-2.5 pr-4 pl-10 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-full border border-navy-800 bg-navy-900/50 py-2.5 pr-4 pl-10 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
             />
           </div>
           <button

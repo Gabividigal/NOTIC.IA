@@ -86,14 +86,14 @@ export default function SeguindoFeed({ noticias, temasSeguidos }: SeguindoFeedPr
               className={`flex h-7 w-7 items-center justify-center rounded-full border transition ${
                 dropdownAberto
                   ? "border-blue-500 text-blue-400"
-                  : "border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-100"
+                  : "border-navy-700 text-zinc-400 hover:border-navy-500 hover:text-zinc-100"
               }`}
             >
               <ListFilter size={14} />
             </button>
 
             {dropdownAberto && (
-              <div className="absolute top-9 left-0 z-40 w-56 rounded-xl border border-zinc-800 bg-zinc-950 p-3 shadow-xl">
+              <div className="absolute top-9 left-0 z-40 w-56 rounded-xl border border-navy-800 bg-navy-950 p-3 shadow-xl">
                 <p className="mb-2 text-xs font-medium tracking-wide text-zinc-500 uppercase">
                   Mostrar temas
                 </p>
@@ -103,13 +103,13 @@ export default function SeguindoFeed({ noticias, temasSeguidos }: SeguindoFeedPr
                     return (
                       <label
                         key={tema.id}
-                        className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-zinc-200 transition hover:bg-zinc-900"
+                        className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-zinc-200 transition hover:bg-navy-900"
                       >
                         <input
                           type="checkbox"
                           checked={visivel}
                           onChange={() => alternarTema(tema.id)}
-                          className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-blue-600 focus:ring-1 focus:ring-blue-500 focus:ring-offset-0"
+                          className="h-4 w-4 rounded border-navy-700 bg-navy-900 text-blue-600 focus:ring-1 focus:ring-blue-500 focus:ring-offset-0"
                         />
                         {tema.nome}
                       </label>

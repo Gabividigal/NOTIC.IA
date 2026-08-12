@@ -38,8 +38,8 @@ export default function ChatPanel() {
   }
 
   return (
-    <div className="flex h-[32rem] flex-col overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/70 lg:h-[calc(100vh-8rem)]">
-      <div className="flex items-center justify-between gap-2 border-b border-zinc-800 px-4 py-3">
+    <div className="flex h-[32rem] flex-col overflow-hidden rounded-xl border border-navy-800 bg-navy-900/70 lg:h-[calc(100vh-8rem)]">
+      <div className="flex items-center justify-between gap-2 border-b border-navy-800 px-4 py-3">
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-blue-400" />
           <h2 className="text-sm font-semibold text-zinc-100">Pergunte sobre esta notícia</h2>
@@ -60,7 +60,7 @@ export default function ChatPanel() {
                 className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
                   mensagem.autor === "usuario"
                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                    : "bg-zinc-800 text-zinc-200"
+                    : "bg-navy-800 text-zinc-200"
                 }`}
               >
                 {mensagem.texto}
@@ -70,13 +70,13 @@ export default function ChatPanel() {
         </div>
       </div>
 
-      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-zinc-800 p-3">
+      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-navy-800 p-3">
         <input
           type="text"
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder="Pergunte algo sobre esta notícia..."
-          className="flex-1 rounded-full border border-zinc-800 bg-zinc-900/50 px-4 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded-full border border-navy-800 bg-navy-900/50 px-4 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
         />
         <button
           type="submit"

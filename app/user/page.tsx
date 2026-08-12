@@ -67,7 +67,7 @@ export default async function UserPage() {
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
       <div className="mx-auto flex max-w-3xl flex-col gap-4 md:flex-row md:items-stretch">
-        <div className="relative flex flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-center">
+        <div className="relative flex flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-navy-800 bg-navy-900/50 p-6 text-center">
           <EditProfileModal nomeAtual={usuario.nome} areaAtuacaoAtual={usuario.areaAtuacao} />
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-xl font-bold text-white">
             {usuario.nome.charAt(0).toUpperCase()}
@@ -78,7 +78,7 @@ export default async function UserPage() {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+        <div className="flex flex-1 flex-col gap-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5">
           <div>
             <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
               Área de atuação
@@ -122,7 +122,7 @@ export default async function UserPage() {
             <Link
               key={theme.id}
               href={`/interesse/${encodeURIComponent(theme.nome)}`}
-              className="flex items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-5 text-center font-medium text-zinc-100 transition hover:border-blue-500/50 hover:text-blue-400"
+              className="flex items-center justify-center rounded-xl border border-navy-800 bg-navy-900/50 px-4 py-5 text-center font-medium text-zinc-100 transition hover:border-blue-500/50 hover:text-blue-400"
             >
               {theme.nome}
             </Link>
@@ -134,7 +134,7 @@ export default async function UserPage() {
         <h2 className="text-lg font-semibold text-zinc-50">Ler depois</h2>
         <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou para ler com calma.</p>
         {usuario.readLaters.length === 0 ? (
-          <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-sm text-zinc-400">
+          <p className="mt-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5 text-sm text-zinc-400">
             Você ainda não marcou nenhuma notícia para ler depois.
           </p>
         ) : (
@@ -161,7 +161,7 @@ export default async function UserPage() {
         <h2 className="text-lg font-semibold text-zinc-50">Favoritos</h2>
         <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou como favoritas.</p>
         {usuario.favorites.length === 0 ? (
-          <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-sm text-zinc-400">
+          <p className="mt-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5 text-sm text-zinc-400">
             Você ainda não adicionou nenhum favorito.
           </p>
         ) : (

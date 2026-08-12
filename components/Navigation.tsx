@@ -41,7 +41,7 @@ export default function Navigation() {
       </ul>
 
       {/* Mobile: barra fixa no rodapé */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-zinc-800 bg-black/90 backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-navy-800 bg-navy-950/90 backdrop-blur md:hidden">
         <ul className="mx-auto flex max-w-5xl items-stretch justify-around">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
             const active = isActive(pathname, href);
