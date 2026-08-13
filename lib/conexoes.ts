@@ -73,7 +73,12 @@ export async function contarPendencias(userId: string) {
 
 export interface ConversaPreview {
   usuario: { id: string; nome: string };
-  ultimaMensagem: { texto: string | null; noticiaTitulo: string; createdAt: Date; deMim: boolean } | null;
+  ultimaMensagem: {
+    texto: string | null;
+    noticiaTitulo: string | null;
+    createdAt: Date;
+    deMim: boolean;
+  } | null;
   naoLidas: number;
 }
 
@@ -112,7 +117,7 @@ export async function buscarConversas(userId: string): Promise<ConversaPreview[]
         ultimaMensagem: ultima
           ? {
               texto: ultima.message,
-              noticiaTitulo: ultima.news.titulo,
+              noticiaTitulo: ultima.news?.titulo ?? null,
               createdAt: ultima.createdAt,
               deMim: ultima.senderId === userId,
             }
@@ -136,7 +141,7 @@ export interface MensagemConversa {
   deMim: boolean;
   mensagem: string | null;
   createdAt: Date;
-  noticia: { id: string; titulo: string; temaNome: string; fonte: string; data: Date };
+  noticia: { id: string; titulo: string; temaNome: string; fonte: string; data: Date } | null;
 }
 
 export async function buscarConversa(userId: string, outroId: string): Promise<MensagemConversa[]> {
@@ -156,14 +161,36 @@ export async function buscarConversa(userId: string, outroId: string): Promise<M
     deMim: mensagem.senderId === userId,
     mensagem: mensagem.message,
     createdAt: mensagem.createdAt,
-    noticia: {
-      id: mensagem.news.id,
-      titulo: mensagem.news.titulo,
-      temaNome: mensagem.news.tema.nome,
-      fonte: mensagem.news.nomeFonte,
-      data: mensagem.news.dataPublicacao,
-    },
+    noticia: mensagem.news
+      ? {
+          id: mensagem.news.id,
+          titulo: mensagem.news.titulo,
+          temaNome: mensagem.news.tema.nome,
+          fonte: mensagem.news.nomeFonte,
+          data: mensagem.news.dataPublicacao,
+        }
+      : null,
   }));
+}
+
+export async function enviarMensagemTexto(senderId: string, receiverId: string, texto: string) {
+  const conexao = await prisma.connection.findFirst({
+    where: {
+      status: "ACCEPTED",
+      OR: [
+        { requesterId: senderId, receiverId },
+        { requesterId: receiverId, receiverId: senderId },
+      ],
+    },
+  });
+
+  if (!conexao) {
+    return null;
+  }
+
+  return prisma.sharedNews.create({
+    data: { senderId, receiverId, message: texto },
+  });
 }
 
 export async function marcarConversaComoLida(userId: string, outroId: string) {

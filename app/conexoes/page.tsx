@@ -105,7 +105,12 @@ export default async function ConexoesPage({ searchParams }: ConexoesPageProps) 
 
         <section className={`w-full flex-1 flex-col md:flex ${withId ? "flex" : "hidden"}`}>
           {conversaAtiva ? (
-            <ConversationPanel nome={conversaAtiva.usuario.nome} mensagens={mensagens} />
+            <ConversationPanel
+              key={conversaAtiva.usuario.id}
+              nome={conversaAtiva.usuario.nome}
+              outroId={conversaAtiva.usuario.id}
+              mensagensIniciais={mensagens}
+            />
           ) : (
             <div className="m-auto max-w-xs text-center text-sm text-zinc-500">
               Selecione uma conversa para ver as notícias trocadas.

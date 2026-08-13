@@ -131,14 +131,14 @@ model SharedNews {
   id         String   @id @default(cuid())
   senderId   String
   receiverId String
-  newsId     String
+  newsId     String?
   message    String?  @db.Text
   read       Boolean  @default(false)
   createdAt  DateTime @default(now())
 
-  sender   User @relation("NoticiasEnviadas", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver User @relation("NoticiasRecebidas", fields: [receiverId], references: [id], onDelete: Cascade)
-  news     News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  sender   User  @relation("NoticiasEnviadas", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User  @relation("NoticiasRecebidas", fields: [receiverId], references: [id], onDelete: Cascade)
+  news     News? @relation(fields: [newsId], references: [id], onDelete: Cascade)
 
   @@map("shared_news")
 }
