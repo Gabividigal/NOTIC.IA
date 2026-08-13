@@ -70,3 +70,105 @@ export async function contarPendencias(userId: string) {
 
   return pedidosPendentes + noticiasNaoLidas;
 }
+
+export interface ConversaPreview {
+  usuario: { id: string; nome: string };
+  ultimaMensagem: { texto: string | null; noticiaTitulo: string; createdAt: Date; deMim: boolean } | null;
+  naoLidas: number;
+}
+
+export async function buscarConversas(userId: string): Promise<ConversaPreview[]> {
+  const conexoes = await prisma.connection.findMany({
+    where: {
+      status: "ACCEPTED",
+      OR: [{ requesterId: userId }, { receiverId: userId }],
+    },
+    include: {
+      requester: { select: { id: true, nome: true } },
+      receiver: { select: { id: true, nome: true } },
+    },
+  });
+
+  const conversas = await Promise.all(
+    conexoes.map(async (conexao) => {
+      const outro = conexao.requesterId === userId ? conexao.receiver : conexao.requester;
+
+      const [ultima, naoLidas] = await Promise.all([
+        prisma.sharedNews.findFirst({
+          where: {
+            OR: [
+              { senderId: userId, receiverId: outro.id },
+              { senderId: outro.id, receiverId: userId },
+            ],
+          },
+          orderBy: { createdAt: "desc" },
+          include: { news: { select: { titulo: true } } },
+        }),
+        prisma.sharedNews.count({ where: { senderId: outro.id, receiverId: userId, read: false } }),
+      ]);
+
+      return {
+        usuario: outro,
+        ultimaMensagem: ultima
+          ? {
+              texto: ultima.message,
+              noticiaTitulo: ultima.news.titulo,
+              createdAt: ultima.createdAt,
+              deMim: ultima.senderId === userId,
+            }
+          : null,
+        naoLidas,
+      };
+    }),
+  );
+
+  conversas.sort((a, b) => {
+    const dataA = a.ultimaMensagem?.createdAt.getTime() ?? 0;
+    const dataB = b.ultimaMensagem?.createdAt.getTime() ?? 0;
+    return dataB - dataA;
+  });
+
+  return conversas;
+}
+
+export interface MensagemConversa {
+  id: string;
+  deMim: boolean;
+  mensagem: string | null;
+  createdAt: Date;
+  noticia: { id: string; titulo: string; temaNome: string; fonte: string; data: Date };
+}
+
+export async function buscarConversa(userId: string, outroId: string): Promise<MensagemConversa[]> {
+  const mensagens = await prisma.sharedNews.findMany({
+    where: {
+      OR: [
+        { senderId: userId, receiverId: outroId },
+        { senderId: outroId, receiverId: userId },
+      ],
+    },
+    orderBy: { createdAt: "asc" },
+    include: { news: { include: { tema: true } } },
+  });
+
+  return mensagens.map((mensagem) => ({
+    id: mensagem.id,
+    deMim: mensagem.senderId === userId,
+    mensagem: mensagem.message,
+    createdAt: mensagem.createdAt,
+    noticia: {
+      id: mensagem.news.id,
+      titulo: mensagem.news.titulo,
+      temaNome: mensagem.news.tema.nome,
+      fonte: mensagem.news.nomeFonte,
+      data: mensagem.news.dataPublicacao,
+    },
+  }));
+}
+
+export async function marcarConversaComoLida(userId: string, outroId: string) {
+  await prisma.sharedNews.updateMany({
+    where: { senderId: outroId, receiverId: userId, read: false },
+    data: { read: true },
+  });
+}
