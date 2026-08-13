@@ -16,6 +16,12 @@ enum Plan {
   PRO
 }
 
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id             String   @id @default(cuid())
   email          String   @unique
@@ -30,6 +36,11 @@ model User {
   chatMessages ChatMessage[]
   readLaters   ReadLater[]
   favorites    Favorite[]
+
+  conexoesEnviadas  Connection[] @relation("ConexoesEnviadas")
+  conexoesRecebidas Connection[] @relation("ConexoesRecebidas")
+  noticiasEnviadas  SharedNews[] @relation("NoticiasEnviadas")
+  noticiasRecebidas SharedNews[] @relation("NoticiasRecebidas")
 
   @@map("users")
 }
@@ -71,6 +82,7 @@ model News {
   chatMessages ChatMessage[]
   readLaters   ReadLater[]
   favorites    Favorite[]
+  sharedNews   SharedNews[]
 
   @@map("news")
 }
@@ -99,6 +111,36 @@ model Favorite {
 
   @@unique([userId, newsId])
   @@map("favorites")
+}
+
+model Connection {
+  id          String           @id @default(cuid())
+  requesterId String
+  receiverId  String
+  status      ConnectionStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+
+  requester User @relation("ConexoesEnviadas", fields: [requesterId], references: [id], onDelete: Cascade)
+  receiver  User @relation("ConexoesRecebidas", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, receiverId])
+  @@map("connections")
+}
+
+model SharedNews {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  newsId     String
+  message    String?  @db.Text
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  sender   User @relation("NoticiasEnviadas", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("NoticiasRecebidas", fields: [receiverId], references: [id], onDelete: Cascade)
+  news     News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@map("shared_news")
 }
 
 model ChatMessage {

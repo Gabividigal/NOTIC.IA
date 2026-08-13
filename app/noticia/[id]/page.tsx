@@ -4,9 +4,11 @@ import { getServerSession } from "next-auth";
 import ThemeBadge from "@/components/ThemeBadge";
 import BackButton from "@/components/BackButton";
 import NewsCardActions from "@/components/NewsCardActions";
+import ShareNewsModal from "@/components/ShareNewsModal";
 import ChatPanel from "@/components/ChatPanel";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { buscarConexoesAceitas } from "@/lib/conexoes";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -31,17 +33,20 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
 
   let readLater = false;
   let favorito = false;
+  let conexoesAceitas: { id: string; nome: string }[] = [];
   if (session?.user) {
-    const [marcadoReadLater, marcadoFavorito] = await Promise.all([
+    const [marcadoReadLater, marcadoFavorito, conexoes] = await Promise.all([
       prisma.readLater.findUnique({
         where: { userId_newsId: { userId: session.user.id, newsId: id } },
       }),
       prisma.favorite.findUnique({
         where: { userId_newsId: { userId: session.user.id, newsId: id } },
       }),
+      buscarConexoesAceitas(session.user.id),
     ]);
     readLater = Boolean(marcadoReadLater);
     favorito = Boolean(marcadoFavorito);
+    conexoesAceitas = conexoes;
   }
 
   const dataFormatada = new Intl.DateTimeFormat("pt-BR", {
@@ -58,12 +63,15 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
         <article className="flex flex-col gap-4 lg:w-[62%]">
           <div className="flex items-start justify-between gap-2">
             <ThemeBadge nome={noticia.tema.nome} />
-            <NewsCardActions
-              newsId={noticia.id}
-              autenticado={Boolean(session?.user)}
-              initialReadLater={readLater}
-              initialFavorito={favorito}
-            />
+            <div className="flex items-center gap-1">
+              <NewsCardActions
+                newsId={noticia.id}
+                autenticado={Boolean(session?.user)}
+                initialReadLater={readLater}
+                initialFavorito={favorito}
+              />
+              {session?.user && <ShareNewsModal newsId={noticia.id} conexoes={conexoesAceitas} />}
+            </div>
           </div>
 
           <h1 className="text-2xl font-bold text-zinc-50 sm:text-3xl">{noticia.titulo}</h1>
