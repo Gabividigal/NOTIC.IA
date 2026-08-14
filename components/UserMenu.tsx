@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { signOut } from "next-auth/react";
-import { LogOut } from "lucide-react";
+import { LogOut, Pencil, Sparkles } from "lucide-react";
 import EditProfileModal from "@/components/EditProfileModal";
 import UpgradeProModal from "@/components/UpgradeProModal";
 
@@ -22,6 +22,8 @@ export default function UserMenu({
   plano,
 }: UserMenuProps) {
   const [aberto, setAberto] = useState(false);
+  const [editAberto, setEditAberto] = useState(false);
+  const [upgradeAberto, setUpgradeAberto] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,6 +48,16 @@ export default function UserMenu({
     };
   }, [aberto]);
 
+  function abrirEdicaoPerfil() {
+    setAberto(false);
+    setEditAberto(true);
+  }
+
+  function abrirUpgradePro() {
+    setAberto(false);
+    setUpgradeAberto(true);
+  }
+
   return (
     <div ref={containerRef} className="relative">
       <button
@@ -66,18 +78,29 @@ export default function UserMenu({
           </div>
 
           <div className="flex flex-col gap-0.5 py-1.5">
-            <EditProfileModal
-              nomeAtual={nome}
-              areaAtuacaoAtual={areaAtuacao}
-              dataNascimentoAtual={dataNascimento}
-              onAbrir={() => setAberto(false)}
-            />
+            <button
+              type="button"
+              onClick={abrirEdicaoPerfil}
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-300 transition hover:bg-navy-900 hover:text-zinc-100"
+            >
+              <Pencil size={15} />
+              Editar perfil
+            </button>
 
             <div className="flex items-center justify-between gap-2 px-3 py-2">
               <span className="text-sm text-zinc-300">
                 Plano: {plano === "PRO" ? "PRO" : "Gratuito"}
               </span>
-              {plano !== "PRO" && <UpgradeProModal onAbrir={() => setAberto(false)} />}
+              {plano !== "PRO" && (
+                <button
+                  type="button"
+                  onClick={abrirUpgradePro}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-3 py-1.5 text-xs font-bold text-zinc-900 shadow-[0_0_16px_rgba(251,191,36,0.45)] transition hover:opacity-90"
+                >
+                  <Sparkles size={14} />
+                  Virar PRO
+                </button>
+              )}
             </div>
           </div>
 
@@ -93,6 +116,20 @@ export default function UserMenu({
           </div>
         </div>
       )}
+
+      <EditProfileModal
+        key={editAberto ? "editar-aberto" : "editar-fechado"}
+        aberto={editAberto}
+        onFechar={() => setEditAberto(false)}
+        nomeAtual={nome}
+        areaAtuacaoAtual={areaAtuacao}
+        dataNascimentoAtual={dataNascimento}
+      />
+      <UpgradeProModal
+        key={upgradeAberto ? "upgrade-aberto" : "upgrade-fechado"}
+        aberto={upgradeAberto}
+        onFechar={() => setUpgradeAberto(false)}
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 interface ModalProps {
@@ -35,7 +36,7 @@ export default function Modal({
     return null;
   }
 
-  return (
+  return createPortal(
     <div
       role="presentation"
       onClick={onFechar}
@@ -63,6 +64,7 @@ export default function Modal({
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
