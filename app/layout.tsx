@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import { obterTemaInicial } from "@/lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,14 +21,18 @@ export const metadata: Metadata = {
   description: "Feed de notícias personalizado e resumido por IA, com chat embutido por notícia.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const temaInicial = await obterTemaInicial();
+
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${
+        temaInicial === "light" ? "light" : ""
+      }`}
     >
       <body className="flex min-h-full flex-col">
-        <Providers>
+        <Providers temaInicial={temaInicial}>
           <Header />
           <div className="flex flex-1 flex-col pb-20 md:pb-0">{children}</div>
           <MobileBottomNav />
