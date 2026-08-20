@@ -64,7 +64,7 @@ export default function NewsCardActions({
         aria-label={readLater ? "Remover de ler depois" : "Marcar para ler depois"}
         title={readLater ? "Remover de ler depois" : "Marcar para ler depois"}
         className={`rounded-full p-1.5 transition ${
-          readLater ? "text-blue-400" : "text-zinc-500 hover:text-zinc-300"
+          readLater ? "text-accent" : "text-muted-foreground hover:text-foreground-secondary"
         }`}
       >
         <Bookmark size={16} fill={readLater ? "currentColor" : "none"} />
@@ -76,7 +76,7 @@ export default function NewsCardActions({
         aria-label={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
         title={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
         className={`rounded-full p-1.5 transition ${
-          favorito ? "text-pink-400" : "text-zinc-500 hover:text-zinc-300"
+          favorito ? "text-pink-400" : "text-muted-foreground hover:text-foreground-secondary"
         }`}
       >
         <Heart size={16} fill={favorito ? "currentColor" : "none"} />

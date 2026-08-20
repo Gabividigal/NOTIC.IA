@@ -19,11 +19,11 @@ export default function CompactNewsCard({ id, titulo, temaNome, fonte, data }: C
   return (
     <Link
       href={`/noticia/${id}`}
-      className="block rounded-lg border border-navy-800 bg-navy-950/60 p-2.5 transition hover:border-navy-700"
+      className="block rounded-lg border border-border bg-background/60 p-2.5 transition hover:border-border-strong"
     >
       <ThemeBadge nome={temaNome} />
-      <p className="mt-1.5 line-clamp-2 text-sm font-medium text-zinc-100">{titulo}</p>
-      <div className="mt-1 flex items-center justify-between text-[11px] text-zinc-500">
+      <p className="mt-1.5 line-clamp-2 text-sm font-medium text-foreground">{titulo}</p>
+      <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
         <span>{fonte}</span>
         <span>{dataFormatada}</span>
       </div>

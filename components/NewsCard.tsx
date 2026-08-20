@@ -32,7 +32,7 @@ export default function NewsCard({
   }).format(data);
 
   return (
-    <article className="flex flex-col gap-3 rounded-xl border border-navy-800 bg-navy-900/50 p-5 transition hover:border-navy-700">
+    <article className="flex flex-col gap-3 rounded-xl border border-border bg-surface-muted/50 p-5 transition hover:border-border-strong">
       <div className="flex items-start justify-between gap-2">
         <ThemeBadge nome={temaNome} />
         <NewsCardActions
@@ -43,11 +43,11 @@ export default function NewsCard({
         />
       </div>
       <Link href={`/noticia/${id}`} className="contents">
-        <h2 className="text-lg font-semibold text-zinc-50 transition hover:text-blue-400">
+        <h2 className="text-lg font-semibold text-foreground transition hover:text-accent">
           {titulo}
         </h2>
-        <p className="text-sm leading-relaxed text-zinc-400">{resumo}</p>
-        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-zinc-500">
+        <p className="text-sm leading-relaxed text-muted-foreground">{resumo}</p>
+        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-muted-foreground">
           <span>{fonte}</span>
           <span>{dataFormatada}</span>
         </div>
