@@ -15,14 +15,21 @@ export default async function Header() {
     session?.user
       ? prisma.user.findUnique({
           where: { id: session.user.id },
-          select: { nome: true, email: true, areaAtuacao: true, dataNascimento: true, plano: true },
+          select: {
+            nome: true,
+            email: true,
+            areaAtuacao: true,
+            dataNascimento: true,
+            plano: true,
+            colorScheme: true,
+          },
         })
       : Promise.resolve(null),
     session?.user ? contarPendencias(session.user.id) : Promise.resolve(0),
   ]);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-navy-800 bg-navy-950/70 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-border bg-background/70 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
         <Logo />
         <Navigation />
@@ -31,11 +38,11 @@ export default async function Header() {
             <Link
               href="/conexoes"
               aria-label="Conexões"
-              className="relative text-zinc-400 transition hover:text-zinc-200"
+              className="relative text-muted-foreground transition hover:text-foreground-secondary"
             >
               <Inbox size={20} />
               {pendencias > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white">
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
                   {pendencias > 9 ? "9+" : pendencias}
                 </span>
               )}
@@ -46,12 +53,13 @@ export default async function Header() {
               areaAtuacao={usuario.areaAtuacao}
               dataNascimento={usuario.dataNascimento.toISOString().slice(0, 10)}
               plano={usuario.plano}
+              colorScheme={usuario.colorScheme === "LIGHT" ? "light" : "dark"}
             />
           </div>
         ) : (
           <Link
             href="/login"
-            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
           >
             Entrar ou criar conta
           </Link>

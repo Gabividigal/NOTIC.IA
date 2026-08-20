@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Modal from "@/components/Modal";
+import ThemePicker from "@/components/ThemePicker";
+import { useTheme, type ColorScheme } from "@/components/ThemeProvider";
 import { AREAS_ATUACAO } from "@/lib/areasAtuacao";
 
 interface EditProfileModalProps {
@@ -12,10 +14,11 @@ interface EditProfileModalProps {
   nomeAtual: string;
   areaAtuacaoAtual: string;
   dataNascimentoAtual: string;
+  colorSchemeAtual: ColorScheme;
 }
 
 const inputClass =
-  "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
+  "w-full rounded-lg border border-border bg-surface-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none";
 
 export default function EditProfileModal({
   aberto,
@@ -23,12 +26,15 @@ export default function EditProfileModal({
   nomeAtual,
   areaAtuacaoAtual,
   dataNascimentoAtual,
+  colorSchemeAtual,
 }: EditProfileModalProps) {
   const router = useRouter();
   const { update } = useSession();
+  const { setTheme } = useTheme();
   const [nome, setNome] = useState(nomeAtual);
   const [areaAtuacao, setAreaAtuacao] = useState(areaAtuacaoAtual);
   const [dataNascimento, setDataNascimento] = useState(dataNascimentoAtual);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(colorSchemeAtual);
   const [erro, setErro] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -47,7 +53,7 @@ export default function EditProfileModal({
       const resposta = await fetch("/api/perfil", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, areaAtuacao, dataNascimento }),
+        body: JSON.stringify({ nome, areaAtuacao, dataNascimento, colorScheme }),
       });
 
       const dados = (await resposta.json().catch(() => ({}))) as { erro?: string };
@@ -57,6 +63,7 @@ export default function EditProfileModal({
         return;
       }
 
+      setTheme(colorScheme);
       await update({ name: nome });
       onFechar();
       router.refresh();
@@ -67,7 +74,7 @@ export default function EditProfileModal({
     <Modal aberto={aberto} onFechar={onFechar} titulo="Editar perfil">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="edit-nome" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="edit-nome" className="text-sm font-medium text-foreground-secondary">
             Nome completo
           </label>
           <input
@@ -80,7 +87,7 @@ export default function EditProfileModal({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="edit-nascimento" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="edit-nascimento" className="text-sm font-medium text-foreground-secondary">
             Data de nascimento
           </label>
           <input
@@ -93,7 +100,7 @@ export default function EditProfileModal({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="edit-area" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="edit-area" className="text-sm font-medium text-foreground-secondary">
             Área de atuação
           </label>
           <select
@@ -110,13 +117,18 @@ export default function EditProfileModal({
           </select>
         </div>
 
+        <div className="flex flex-col gap-1.5">
+          <span className="text-sm font-medium text-foreground-secondary">Tema</span>
+          <ThemePicker value={colorScheme} onChange={setColorScheme} />
+        </div>
+
         {erro && <p className="text-sm text-red-400">{erro}</p>}
 
         <div className="mt-2 flex justify-end gap-2">
           <button
             type="button"
             onClick={onFechar}
-            className="rounded-full px-4 py-2 text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+            className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground-secondary"
           >
             Cancelar
           </button>
@@ -124,7 +136,7 @@ export default function EditProfileModal({
             type="button"
             disabled={!nome.trim() || !dataNascimento || isPending}
             onClick={salvar}
-            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isPending ? "Salvando..." : "Salvar"}
           </button>

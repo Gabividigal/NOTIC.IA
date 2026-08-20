@@ -12,10 +12,11 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ erro: "É preciso estar logado." }, { status: 401 });
   }
 
-  const { nome, areaAtuacao, dataNascimento } = (await request.json().catch(() => ({}))) as {
+  const { nome, areaAtuacao, dataNascimento, colorScheme } = (await request.json().catch(() => ({}))) as {
     nome?: string;
     areaAtuacao?: string;
     dataNascimento?: string;
+    colorScheme?: "light" | "dark";
   };
 
   const nomeTratado = nome?.trim();
@@ -35,9 +36,18 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ erro: "Data de nascimento inválida." }, { status: 400 });
   }
 
+  if (colorScheme !== undefined && colorScheme !== "light" && colorScheme !== "dark") {
+    return NextResponse.json({ erro: "Tema inválido." }, { status: 400 });
+  }
+
   await prisma.user.update({
     where: { id: session.user.id },
-    data: { nome: nomeTratado, areaAtuacao, dataNascimento: dataNascimentoConvertida },
+    data: {
+      nome: nomeTratado,
+      areaAtuacao,
+      dataNascimento: dataNascimentoConvertida,
+      ...(colorScheme !== undefined ? { colorScheme: colorScheme === "light" ? "LIGHT" : "DARK" } : {}),
+    },
   });
 
   return NextResponse.json({ ok: true });
