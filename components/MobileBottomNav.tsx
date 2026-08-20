@@ -8,7 +8,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-navy-800 bg-navy-950/90 backdrop-blur md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-background/90 backdrop-blur md:hidden">
       <ul className="mx-auto flex max-w-5xl items-stretch justify-around">
         {NAV_ITEMS.map(({ href, mobileLabel, icon: Icon }) => {
           const active = isNavItemActive(pathname, href);
@@ -17,7 +17,7 @@ export default function MobileBottomNav() {
               <Link
                 href={href}
                 className={`flex flex-col items-center gap-1 py-2.5 text-[11px] leading-none ${
-                  active ? "text-blue-400" : "text-zinc-500"
+                  active ? "text-accent" : "text-muted-foreground"
                 }`}
               >
                 <Icon size={20} strokeWidth={active ? 2.5 : 2} />

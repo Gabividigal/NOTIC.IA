@@ -7,7 +7,7 @@ export default function LogoutButton() {
     <button
       type="button"
       onClick={() => signOut({ callbackUrl: "/" })}
-      className="rounded-full border border-navy-700 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-navy-500 hover:text-zinc-100"
+      className="rounded-full border border-border-strong px-3 py-1.5 text-xs font-medium text-foreground-secondary transition hover:border-border-hover hover:text-foreground"
     >
       Sair
     </button>

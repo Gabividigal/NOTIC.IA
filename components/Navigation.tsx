@@ -16,7 +16,7 @@ export default function Navigation() {
             <Link
               href={href}
               className={`flex items-center gap-2 text-sm font-medium transition ${
-                active ? "text-blue-400" : "text-zinc-400 hover:text-zinc-200"
+                active ? "text-accent" : "text-muted-foreground hover:text-foreground-secondary"
               }`}
             >
               <Icon size={16} />

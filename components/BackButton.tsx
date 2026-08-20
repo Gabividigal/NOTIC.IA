@@ -11,7 +11,7 @@ export default function BackButton() {
       type="button"
       onClick={() => router.back()}
       aria-label="Voltar"
-      className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-400 transition hover:text-zinc-100"
+      className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
     >
       <ArrowLeft size={18} />
       Voltar
