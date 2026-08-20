@@ -38,13 +38,13 @@ export default function ChatPanel() {
   }
 
   return (
-    <div className="flex h-[32rem] flex-col overflow-hidden rounded-xl border border-navy-800 bg-navy-900/70 lg:h-[calc(100vh-8rem)]">
-      <div className="flex items-center justify-between gap-2 border-b border-navy-800 px-4 py-3">
+    <div className="flex h-[32rem] flex-col overflow-hidden rounded-xl border border-border bg-surface-muted/70 lg:h-[calc(100vh-8rem)]">
+      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <Sparkles size={16} className="text-blue-400" />
-          <h2 className="text-sm font-semibold text-zinc-100">Pergunte sobre esta notícia</h2>
+          <Sparkles size={16} className="text-accent" />
+          <h2 className="text-sm font-semibold text-foreground">Pergunte sobre esta notícia</h2>
         </div>
-        <span className="rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 px-2.5 py-1 text-[10px] font-medium tracking-wide text-blue-300 uppercase ring-1 ring-inset ring-blue-500/30">
+        <span className="rounded-full bg-accent/15 px-2.5 py-1 text-[10px] font-medium tracking-wide text-accent uppercase ring-1 ring-inset ring-accent/30">
           Em breve
         </span>
       </div>
@@ -59,8 +59,8 @@ export default function ChatPanel() {
               <p
                 className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
                   mensagem.autor === "usuario"
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                    : "bg-navy-800 text-zinc-200"
+                    ? "bg-accent text-white"
+                    : "bg-surface-muted text-foreground-secondary"
                 }`}
               >
                 {mensagem.texto}
@@ -70,19 +70,19 @@ export default function ChatPanel() {
         </div>
       </div>
 
-      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-navy-800 p-3">
+      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-border p-3">
         <input
           type="text"
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder="Pergunte algo sobre esta notícia..."
-          className="flex-1 rounded-full border border-navy-800 bg-navy-900/50 px-4 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded-full border border-border bg-surface-muted/50 px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
         />
         <button
           type="submit"
           disabled={!texto.trim()}
           aria-label="Enviar mensagem"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Send size={16} />
         </button>

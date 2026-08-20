@@ -74,21 +74,21 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-zinc-50 sm:text-3xl">{noticia.titulo}</h1>
+          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">{noticia.titulo}</h1>
 
-          <div className="flex items-center gap-2 text-xs text-zinc-500">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{noticia.nomeFonte}</span>
             <span>·</span>
             <span>{dataFormatada}</span>
           </div>
 
-          <p className="text-base leading-relaxed text-zinc-300">{noticia.resumoIA}</p>
+          <p className="text-base leading-relaxed text-foreground-secondary">{noticia.resumoIA}</p>
 
           <Link
             href={noticia.linkFonte}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-fit text-sm font-medium text-blue-400 hover:underline"
+            className="mt-2 w-fit text-sm font-medium text-accent hover:underline"
           >
             Ler matéria completa na fonte original →
           </Link>

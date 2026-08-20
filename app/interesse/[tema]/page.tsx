@@ -37,14 +37,14 @@ export default async function InteressePage({ params }: InteressePageProps) {
       <BackButton />
 
       <div className="mt-6 mb-8">
-        <h1 className="text-2xl font-bold text-zinc-50">{tema.nome}</h1>
-        <p className="mt-1 text-sm text-zinc-400">
+        <h1 className="text-2xl font-bold text-foreground">{tema.nome}</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Notícias sobre {tema.nome}, resumidas por IA.
         </p>
       </div>
 
       {noticias.length === 0 ? (
-        <p className="text-zinc-400">Nenhuma notícia disponível para este tema no momento.</p>
+        <p className="text-muted-foreground">Nenhuma notícia disponível para este tema no momento.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {noticias.map((noticia) => (
