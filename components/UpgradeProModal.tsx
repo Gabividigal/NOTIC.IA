@@ -33,14 +33,14 @@ export default function UpgradeProModal({ aberto, onFechar }: UpgradeProModalPro
           <span className="text-xs font-medium tracking-wide text-amber-400 uppercase">
             Plano PRO
           </span>
-          <p className="text-3xl font-bold text-zinc-50">
-            R$ 34,99<span className="text-base font-medium text-zinc-400">/mês</span>
+          <p className="text-3xl font-bold text-foreground">
+            R$ 34,99<span className="text-base font-medium text-muted-foreground">/mês</span>
           </p>
         </div>
 
         <ul className="flex flex-col gap-2.5">
           {BENEFICIOS_PRO.map((beneficio) => (
-            <li key={beneficio} className="flex items-start gap-2.5 text-sm text-zinc-200">
+            <li key={beneficio} className="flex items-start gap-2.5 text-sm text-foreground-secondary">
               <Check size={18} className="mt-0.5 shrink-0 text-green-500" />
               <span>{beneficio}</span>
             </li>

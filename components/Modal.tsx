@@ -40,24 +40,24 @@ export default function Modal({
     <div
       role="presentation"
       onClick={onFechar}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/70 px-4 py-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 px-4 py-8"
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-titulo"
         onClick={(event) => event.stopPropagation()}
-        className={`w-full ${largura} rounded-xl border border-navy-800 bg-navy-950 p-6 shadow-xl`}
+        className={`w-full ${largura} rounded-xl border border-border bg-background p-6 shadow-xl`}
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 id="modal-titulo" className="text-lg font-semibold text-zinc-50">
+          <h2 id="modal-titulo" className="text-lg font-semibold text-foreground">
             {titulo}
           </h2>
           <button
             type="button"
             onClick={onFechar}
             aria-label="Fechar"
-            className="text-zinc-500 transition hover:text-zinc-300"
+            className="text-muted-foreground transition hover:text-foreground-secondary"
           >
             <X size={20} />
           </button>
