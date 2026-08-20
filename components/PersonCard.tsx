@@ -55,12 +55,12 @@ export default function PersonCard({
   }
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-xl border border-navy-800 bg-navy-900/50 px-4 py-3">
+    <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-muted/50 px-4 py-3">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold text-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
           {nome.charAt(0).toUpperCase()}
         </div>
-        <span className="font-medium text-zinc-100">{nome}</span>
+        <span className="font-medium text-foreground">{nome}</span>
       </div>
 
       {status === "NENHUMA" && (
@@ -68,7 +68,7 @@ export default function PersonCard({
           type="button"
           onClick={conectar}
           disabled={isPending}
-          className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1.5 text-xs font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-xs font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <UserPlus size={14} />
           Conectar
@@ -79,7 +79,7 @@ export default function PersonCard({
         <button
           type="button"
           disabled
-          className="rounded-full border border-navy-800 px-3 py-1.5 text-xs font-medium text-zinc-500"
+          className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground"
         >
           Pedido enviado
         </button>
@@ -91,7 +91,7 @@ export default function PersonCard({
             type="button"
             onClick={() => responder("aceitar")}
             disabled={isPending}
-            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1.5 text-xs font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-full bg-accent px-3 py-1.5 text-xs font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Aceitar
           </button>
@@ -99,7 +99,7 @@ export default function PersonCard({
             type="button"
             onClick={() => responder("recusar")}
             disabled={isPending}
-            className="rounded-full border border-navy-800 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground-secondary transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
           >
             Recusar
           </button>
@@ -115,7 +115,7 @@ export default function PersonCard({
           <button
             type="button"
             onClick={() => setModalAberto(true)}
-            className="rounded-full border border-navy-800 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-blue-500/50 hover:text-blue-400"
+            className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground-secondary transition hover:border-accent/50 hover:text-accent"
           >
             Enviar notícia
           </button>

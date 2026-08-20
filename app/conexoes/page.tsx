@@ -20,10 +20,10 @@ export default async function ConexoesPage({ searchParams }: ConexoesPageProps) 
   if (!session?.user) {
     return (
       <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
-        <h1 className="text-2xl font-bold text-zinc-50">Faça login para ver suas conexões</h1>
+        <h1 className="text-2xl font-bold text-foreground">Faça login para ver suas conexões</h1>
         <Link
           href="/login"
-          className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+          className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
         >
           Entrar ou criar conta
         </Link>
@@ -54,19 +54,19 @@ export default async function ConexoesPage({ searchParams }: ConexoesPageProps) 
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col md:px-4 md:py-8">
-      <div className="flex h-[75vh] overflow-hidden border-navy-800 md:h-[calc(100vh-10rem)] md:rounded-xl md:border">
+      <div className="flex h-[75vh] overflow-hidden border-border md:h-[calc(100vh-10rem)] md:rounded-xl md:border">
         <aside
-          className={`w-full flex-col overflow-y-auto border-navy-800 md:flex md:w-80 md:shrink-0 md:border-r ${
+          className={`w-full flex-col overflow-y-auto border-border md:flex md:w-80 md:shrink-0 md:border-r ${
             withId ? "hidden md:flex" : "flex"
           }`}
         >
-          <div className="border-b border-navy-800 p-4">
-            <h1 className="text-lg font-bold text-zinc-50">Conexões</h1>
+          <div className="border-b border-border p-4">
+            <h1 className="text-lg font-bold text-foreground">Conexões</h1>
           </div>
 
           {pedidosPendentes.length > 0 && (
-            <div className="border-b border-navy-800 p-3">
-              <h2 className="px-1 pb-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+            <div className="border-b border-border p-3">
+              <h2 className="px-1 pb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                 Pedidos pendentes
               </h2>
               <div className="flex flex-col gap-2">
@@ -78,7 +78,7 @@ export default async function ConexoesPage({ searchParams }: ConexoesPageProps) 
           )}
 
           {conversas.length === 0 ? (
-            <p className="p-4 text-sm text-zinc-500">
+            <p className="p-4 text-sm text-muted-foreground">
               Você ainda não tem conexões. Use a busca de pessoas para se conectar.
             </p>
           ) : (
@@ -112,7 +112,7 @@ export default async function ConexoesPage({ searchParams }: ConexoesPageProps) 
               mensagensIniciais={mensagens}
             />
           ) : (
-            <div className="m-auto max-w-xs text-center text-sm text-zinc-500">
+            <div className="m-auto max-w-xs text-center text-sm text-muted-foreground">
               Selecione uma conversa para ver as notícias trocadas.
             </div>
           )}

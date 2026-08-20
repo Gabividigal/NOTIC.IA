@@ -73,7 +73,7 @@ export default function ShareNewsModal({
         onClick={abrir}
         aria-label="Enviar para conexão"
         title="Enviar para conexão"
-        className="rounded-full p-1.5 text-zinc-500 transition hover:text-zinc-300"
+        className="rounded-full p-1.5 text-muted-foreground transition hover:text-foreground-secondary"
       >
         <Send size={16} />
       </button>
@@ -82,7 +82,7 @@ export default function ShareNewsModal({
         {enviado ? (
           <p className="text-sm text-green-400">Notícia enviada!</p>
         ) : conexoes.length === 0 ? (
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-muted-foreground">
             Você ainda não tem conexões aceitas. Conecte-se com alguém na busca por pessoas.
           </p>
         ) : (
@@ -91,13 +91,13 @@ export default function ShareNewsModal({
               {conexoes.map((conexao) => (
                 <label
                   key={conexao.id}
-                  className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-zinc-200 hover:bg-navy-900"
+                  className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-foreground-secondary hover:bg-surface-muted"
                 >
                   <input
                     type="checkbox"
                     checked={selecionados.has(conexao.id)}
                     onChange={() => alternar(conexao.id)}
-                    className="h-4 w-4 rounded border-navy-700 bg-navy-900 text-blue-600 focus:ring-blue-500"
+                    className="h-4 w-4 rounded border-border-strong bg-surface-muted text-accent focus:ring-accent"
                   />
                   {conexao.nome}
                 </label>
@@ -109,7 +109,7 @@ export default function ShareNewsModal({
               onChange={(e) => setMensagem(e.target.value)}
               placeholder="Mensagem (opcional)"
               rows={2}
-              className="w-full rounded-lg border border-navy-800 bg-navy-900/50 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-lg border border-border bg-surface-muted/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
             />
 
             {erro && <p className="text-sm text-red-400">{erro}</p>}
@@ -118,7 +118,7 @@ export default function ShareNewsModal({
               type="button"
               disabled={selecionados.size === 0 || isPending}
               onClick={enviar}
-              className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isPending ? "Enviando..." : "Enviar"}
             </button>

@@ -56,23 +56,23 @@ export default function ConversationPanel({ nome, outroId, mensagensIniciais }: 
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-3 border-b border-navy-800 px-4 py-3">
+      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
         <Link
           href="/conexoes"
           aria-label="Voltar para a lista de conversas"
-          className="text-zinc-400 transition hover:text-zinc-200 md:hidden"
+          className="text-muted-foreground transition hover:text-foreground-secondary md:hidden"
         >
           <ArrowLeft size={20} />
         </Link>
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold text-white">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
           {nome.charAt(0).toUpperCase()}
         </div>
-        <span className="font-semibold text-zinc-50">{nome}</span>
+        <span className="font-semibold text-foreground">{nome}</span>
       </div>
 
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-4">
         {mensagens.length === 0 ? (
-          <p className="m-auto max-w-xs text-center text-sm text-zinc-500">
+          <p className="m-auto max-w-xs text-center text-sm text-muted-foreground">
             Nenhuma mensagem trocada com {nome} ainda. Escreva algo ou envie uma notícia a partir da
             tela de uma notícia.
           </p>
@@ -85,13 +85,13 @@ export default function ConversationPanel({ nome, outroId, mensagensIniciais }: 
               <div
                 className={`max-w-[85%] rounded-2xl p-3 sm:max-w-sm ${
                   mensagem.deMim
-                    ? "border border-blue-500/30 bg-gradient-to-r from-blue-600/20 to-purple-600/20"
-                    : "border border-navy-800 bg-navy-900/60"
+                    ? "border border-accent/30 bg-accent/15"
+                    : "border border-border bg-surface-muted/60"
                 }`}
               >
                 {mensagem.mensagem && (
                   <p
-                    className={`text-sm leading-relaxed text-zinc-200 ${mensagem.noticia ? "mb-2" : ""}`}
+                    className={`text-sm leading-relaxed text-foreground-secondary ${mensagem.noticia ? "mb-2" : ""}`}
                   >
                     {mensagem.mensagem}
                   </p>
@@ -106,7 +106,7 @@ export default function ConversationPanel({ nome, outroId, mensagensIniciais }: 
                   />
                 )}
               </div>
-              <span className="px-1 text-[11px] text-zinc-500">
+              <span className="px-1 text-[11px] text-muted-foreground">
                 {new Intl.DateTimeFormat("pt-BR", {
                   day: "2-digit",
                   month: "short",
@@ -120,19 +120,19 @@ export default function ConversationPanel({ nome, outroId, mensagensIniciais }: 
         <div ref={fimRef} />
       </div>
 
-      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-navy-800 p-3">
+      <form onSubmit={enviar} className="flex items-center gap-2 border-t border-border p-3">
         <input
           type="text"
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder="Escreva uma mensagem..."
-          className="flex-1 rounded-full border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded-full border border-border bg-surface-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
         />
         <button
           type="submit"
           disabled={!texto.trim() || isPending}
           aria-label="Enviar mensagem"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Send size={16} />
         </button>

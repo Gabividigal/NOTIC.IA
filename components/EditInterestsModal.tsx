@@ -76,7 +76,7 @@ export default function EditInterestsModal({
         type="button"
         onClick={abrir}
         aria-label="Editar interesses"
-        className="flex h-6 w-6 items-center justify-center rounded-full border border-navy-700 text-zinc-400 transition hover:border-navy-500 hover:text-zinc-100"
+        className="flex h-6 w-6 items-center justify-center rounded-full border border-border-strong text-muted-foreground transition hover:border-border-hover hover:text-foreground"
       >
         <Plus size={14} />
       </button>
@@ -84,7 +84,7 @@ export default function EditInterestsModal({
       <Modal aberto={aberto} onFechar={() => setAberto(false)} titulo="Editar interesses">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-muted-foreground">
               {limite !== null
                 ? `Escolha exatamente ${limite} temas.`
                 : "Escolha seus temas de interesse."}
@@ -92,8 +92,8 @@ export default function EditInterestsModal({
             <span
               className={`text-xs font-medium whitespace-nowrap ${
                 limite !== null && selecionados.length === limite
-                  ? "text-blue-400"
-                  : "text-zinc-500"
+                  ? "text-accent"
+                  : "text-muted-foreground"
               }`}
             >
               {selecionados.length}
@@ -113,10 +113,10 @@ export default function EditInterestsModal({
                   onClick={() => alternar(tema.id)}
                   className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-inset transition ${
                     selecionado
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white ring-transparent"
+                      ? "bg-accent text-white ring-transparent"
                       : desabilitado
-                        ? "cursor-not-allowed text-zinc-600 ring-navy-800"
-                        : "text-zinc-300 ring-navy-700 hover:ring-navy-500"
+                        ? "cursor-not-allowed text-subtle-foreground ring-border"
+                        : "text-foreground-secondary ring-border-strong hover:ring-border-hover"
                   }`}
                 >
                   {selecionado && <Check size={12} />}
@@ -132,7 +132,7 @@ export default function EditInterestsModal({
             <button
               type="button"
               onClick={() => setAberto(false)}
-              className="rounded-full px-4 py-2 text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground-secondary"
             >
               Cancelar
             </button>
@@ -140,7 +140,7 @@ export default function EditInterestsModal({
               type="button"
               disabled={!podeSalvar}
               onClick={salvar}
-              className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isPending ? "Salvando..." : "Salvar"}
             </button>

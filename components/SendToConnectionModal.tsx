@@ -92,7 +92,7 @@ export default function SendToConnectionModal({
         <div className="flex flex-col gap-3">
           <div className="relative">
             <Search
-              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-zinc-500"
+              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
               size={16}
             />
             <input
@@ -100,14 +100,14 @@ export default function SendToConnectionModal({
               value={termo}
               onChange={(e) => buscar(e.target.value)}
               placeholder="Buscar notícia por título..."
-              className="w-full rounded-lg border border-navy-800 bg-navy-900/50 py-2 pr-3 pl-9 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-lg border border-border bg-surface-muted/50 py-2 pr-3 pl-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
             />
           </div>
 
           {termo.trim() && (
-            <div className="max-h-48 overflow-y-auto rounded-lg border border-navy-800">
+            <div className="max-h-48 overflow-y-auto rounded-lg border border-border">
               {resultados.length === 0 ? (
-                <p className="p-3 text-sm text-zinc-500">
+                <p className="p-3 text-sm text-muted-foreground">
                   {buscaPending ? "Buscando..." : "Nenhuma notícia encontrada."}
                 </p>
               ) : (
@@ -116,10 +116,10 @@ export default function SendToConnectionModal({
                     key={noticia.id}
                     type="button"
                     onClick={() => setSelecionada(noticia)}
-                    className={`block w-full border-b border-navy-800 px-3 py-2 text-left text-sm last:border-b-0 ${
+                    className={`block w-full border-b border-border px-3 py-2 text-left text-sm last:border-b-0 ${
                       selecionada?.id === noticia.id
-                        ? "bg-blue-500/10 text-blue-400"
-                        : "text-zinc-200 hover:bg-navy-900"
+                        ? "bg-accent/10 text-accent"
+                        : "text-foreground-secondary hover:bg-surface-muted"
                     }`}
                   >
                     {noticia.titulo}
@@ -130,8 +130,8 @@ export default function SendToConnectionModal({
           )}
 
           {selecionada && (
-            <p className="text-xs text-zinc-400">
-              Selecionada: <span className="text-zinc-200">{selecionada.titulo}</span>
+            <p className="text-xs text-muted-foreground">
+              Selecionada: <span className="text-foreground-secondary">{selecionada.titulo}</span>
             </p>
           )}
 
@@ -140,7 +140,7 @@ export default function SendToConnectionModal({
             onChange={(e) => setMensagem(e.target.value)}
             placeholder="Mensagem (opcional)"
             rows={2}
-            className="w-full rounded-lg border border-navy-800 bg-navy-900/50 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-lg border border-border bg-surface-muted/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
           />
 
           {erro && <p className="text-sm text-red-400">{erro}</p>}
@@ -149,7 +149,7 @@ export default function SendToConnectionModal({
             type="button"
             disabled={!selecionada || isPending}
             onClick={enviar}
-            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isPending ? "Enviando..." : "Enviar"}
           </button>
