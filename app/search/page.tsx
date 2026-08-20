@@ -76,15 +76,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {tema && aba === "noticias" && <BackButton />}
 
       <div className={tema && aba === "noticias" ? "mt-6 mb-8" : "mb-8"}>
-        <h1 className="text-2xl font-bold text-zinc-50">Buscar</h1>
+        <h1 className="text-2xl font-bold text-foreground">Buscar</h1>
 
-        <div className="mt-4 flex items-center gap-1 border-b border-navy-800">
+        <div className="mt-4 flex items-center gap-1 border-b border-border">
           <Link
             href={urlAba("noticias", q)}
             className={`px-3 py-2 text-sm font-medium transition ${
               aba === "noticias"
-                ? "border-b-2 border-blue-500 text-blue-400"
-                : "text-zinc-400 hover:text-zinc-200"
+                ? "border-b-2 border-accent text-accent"
+                : "text-muted-foreground hover:text-foreground-secondary"
             }`}
           >
             Notícias
@@ -93,8 +93,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             href={urlAba("pessoas", q)}
             className={`px-3 py-2 text-sm font-medium transition ${
               aba === "pessoas"
-                ? "border-b-2 border-blue-500 text-blue-400"
-                : "text-zinc-400 hover:text-zinc-200"
+                ? "border-b-2 border-accent text-accent"
+                : "text-muted-foreground hover:text-foreground-secondary"
             }`}
           >
             Pessoas
@@ -105,7 +105,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           {aba === "pessoas" && <input type="hidden" name="aba" value="pessoas" />}
           <div className="relative flex-1">
             <SearchIcon
-              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-zinc-500"
+              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
               size={18}
             />
             <input
@@ -113,21 +113,21 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               name="q"
               defaultValue={q}
               placeholder={aba === "noticias" ? "Buscar por título ou resumo..." : "Buscar por nome..."}
-              className="w-full rounded-full border border-navy-800 bg-navy-900/50 py-2.5 pr-4 pl-10 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-full border border-border bg-surface-muted/50 py-2.5 pr-4 pl-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none"
             />
           </div>
           <button
             type="submit"
-            className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
+            className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
           >
             Buscar
           </button>
         </form>
 
         {tema && aba === "noticias" && (
-          <p className="mt-3 text-sm text-zinc-400">
-            Filtrando por tema: <span className="text-zinc-200">{tema}</span>{" "}
-            <Link href="/search" className="text-blue-400 hover:underline">
+          <p className="mt-3 text-sm text-muted-foreground">
+            Filtrando por tema: <span className="text-foreground-secondary">{tema}</span>{" "}
+            <Link href="/search" className="text-accent hover:underline">
               limpar
             </Link>
           </p>
@@ -136,9 +136,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {aba === "noticias" ? (
         !termo && !tema ? (
-          <p className="text-zinc-400">Digite um termo acima para buscar notícias.</p>
+          <p className="text-muted-foreground">Digite um termo acima para buscar notícias.</p>
         ) : noticias.length === 0 ? (
-          <p className="text-zinc-400">Nenhuma notícia encontrada.</p>
+          <p className="text-muted-foreground">Nenhuma notícia encontrada.</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {noticias.map((noticia) => (
@@ -158,16 +158,16 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         )
       ) : !session?.user ? (
-        <p className="text-zinc-400">
-          <Link href="/login" className="text-blue-400 hover:underline">
+        <p className="text-muted-foreground">
+          <Link href="/login" className="text-accent hover:underline">
             Faça login
           </Link>{" "}
           para buscar pessoas e se conectar.
         </p>
       ) : !termo ? (
-        <p className="text-zinc-400">Digite um nome acima para buscar pessoas.</p>
+        <p className="text-muted-foreground">Digite um nome acima para buscar pessoas.</p>
       ) : pessoas.length === 0 ? (
-        <p className="text-zinc-400">Nenhuma pessoa encontrada.</p>
+        <p className="text-muted-foreground">Nenhuma pessoa encontrada.</p>
       ) : (
         <div className="flex flex-col gap-3">
           {pessoas.map((pessoa) => {
