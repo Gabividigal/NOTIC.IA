@@ -16,6 +16,11 @@ enum Plan {
   PRO
 }
 
+enum ColorScheme {
+  LIGHT
+  DARK
+}
+
 enum ConnectionStatus {
   PENDING
   ACCEPTED
@@ -30,6 +35,7 @@ model User {
   dataNascimento DateTime
   areaAtuacao    String
   plano          Plan     @default(FREE)
+  colorScheme    ColorScheme @default(DARK)
   createdAt      DateTime @default(now())
 
   temas        UserTheme[]
