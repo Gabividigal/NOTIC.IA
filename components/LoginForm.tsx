@@ -6,7 +6,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 
 const inputClass =
-  "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
+  "w-full rounded-lg border border-border bg-surface-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-sm flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-sm font-medium text-zinc-300">
+        <label htmlFor="email" className="text-sm font-medium text-foreground-secondary">
           E-mail
         </label>
         <input
@@ -55,7 +55,7 @@ export default function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="senha" className="text-sm font-medium text-zinc-300">
+        <label htmlFor="senha" className="text-sm font-medium text-foreground-secondary">
           Senha
         </label>
         <input
@@ -75,14 +75,14 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isPending || !email || !senha}
-        className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {isPending ? "Entrando..." : "Entrar"}
       </button>
 
-      <p className="text-center text-sm text-zinc-400">
+      <p className="text-center text-sm text-muted-foreground">
         Não tem uma conta?{" "}
-        <Link href="/cadastro" className="text-blue-400 hover:underline">
+        <Link href="/cadastro" className="text-accent hover:underline">
           Criar agora
         </Link>
       </p>

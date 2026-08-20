@@ -16,15 +16,15 @@ export default async function UserPage() {
   if (!session?.user) {
     return (
       <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
-        <UserRound size={40} className="text-zinc-600" />
-        <h1 className="text-2xl font-bold text-zinc-50">Faça login para ver seu perfil</h1>
-        <p className="max-w-md text-zinc-400">
+        <UserRound size={40} className="text-subtle-foreground" />
+        <h1 className="text-2xl font-bold text-foreground">Faça login para ver seu perfil</h1>
+        <p className="max-w-md text-muted-foreground">
           Acompanhe os temas que você segue, seu histórico de chat com as notícias e gerencie sua
           assinatura.
         </p>
         <Link
           href="/login"
-          className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+          className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
         >
           Entrar ou criar conta
         </Link>
@@ -53,7 +53,7 @@ export default async function UserPage() {
   if (!usuario) {
     return (
       <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
-        <p className="text-zinc-400">Não foi possível carregar seu perfil.</p>
+        <p className="text-muted-foreground">Não foi possível carregar seu perfil.</p>
         <LogoutButton />
       </main>
     );
@@ -66,14 +66,14 @@ export default async function UserPage() {
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
       <section>
         <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold text-zinc-50">Seus interesses</h2>
+          <h2 className="text-lg font-semibold text-foreground">Seus interesses</h2>
           <EditInterestsModal
             temas={todosOsTemas}
             selecionadosAtuais={usuario.temas.map(({ theme }) => theme.id)}
             plano={usuario.plano}
           />
         </div>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Toque em um tema para ver o feed filtrado só com ele.
         </p>
         <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -81,7 +81,7 @@ export default async function UserPage() {
             <Link
               key={theme.id}
               href={`/interesse/${encodeURIComponent(theme.nome)}`}
-              className="flex items-center justify-center rounded-xl border border-navy-800 bg-navy-900/50 px-4 py-5 text-center font-medium text-zinc-100 transition hover:border-blue-500/50 hover:text-blue-400"
+              className="flex items-center justify-center rounded-xl border border-border bg-surface-muted/50 px-4 py-5 text-center font-medium text-foreground transition hover:border-accent/50 hover:text-accent"
             >
               {theme.nome}
             </Link>
@@ -90,10 +90,10 @@ export default async function UserPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-lg font-semibold text-zinc-50">Ler depois</h2>
-        <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou para ler com calma.</p>
+        <h2 className="text-lg font-semibold text-foreground">Ler depois</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Notícias que você marcou para ler com calma.</p>
         {usuario.readLaters.length === 0 ? (
-          <p className="mt-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5 text-sm text-zinc-400">
+          <p className="mt-4 rounded-xl border border-border bg-surface-muted/50 p-5 text-sm text-muted-foreground">
             Você ainda não marcou nenhuma notícia para ler depois.
           </p>
         ) : (
@@ -117,10 +117,10 @@ export default async function UserPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-lg font-semibold text-zinc-50">Favoritos</h2>
-        <p className="mt-1 text-sm text-zinc-400">Notícias que você marcou como favoritas.</p>
+        <h2 className="text-lg font-semibold text-foreground">Favoritos</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Notícias que você marcou como favoritas.</p>
         {usuario.favorites.length === 0 ? (
-          <p className="mt-4 rounded-xl border border-navy-800 bg-navy-900/50 p-5 text-sm text-zinc-400">
+          <p className="mt-4 rounded-xl border border-border bg-surface-muted/50 p-5 text-sm text-muted-foreground">
             Você ainda não adicionou nenhum favorito.
           </p>
         ) : (
