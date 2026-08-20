@@ -2,6 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import type { ColorScheme } from "@/components/ThemeProvider";
 
 interface RegistrarInput {
   nome: string;
@@ -10,6 +11,7 @@ interface RegistrarInput {
   dataNascimento: string;
   areaAtuacao: string;
   temaIds: string[];
+  colorScheme: ColorScheme;
 }
 
 type RegistrarResultado = { ok: true } | { ok: false; erro: string };
@@ -57,6 +59,7 @@ export async function registrarUsuario(input: RegistrarInput): Promise<Registrar
       senha: senhaHash,
       dataNascimento,
       areaAtuacao,
+      colorScheme: input.colorScheme === "light" ? "LIGHT" : "DARK",
       temas: {
         create: input.temaIds.map((themeId) => ({ themeId })),
       },

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { registrarUsuario } from "@/app/cadastro/actions";
 import { AREAS_ATUACAO } from "@/lib/areasAtuacao";
+import ThemePicker from "@/components/ThemePicker";
+import type { ColorScheme } from "@/components/ThemeProvider";
 
 interface Tema {
   id: string;
@@ -13,7 +15,7 @@ interface Tema {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-navy-800 bg-navy-900/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-blue-500 focus:outline-none";
+  "w-full rounded-lg border border-border bg-surface-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none";
 
 const MAX_TEMAS = 3;
 
@@ -26,6 +28,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [areaAtuacao, setAreaAtuacao] = useState("");
   const [temaIds, setTemaIds] = useState<string[]>([]);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const [erro, setErro] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -80,6 +83,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
         dataNascimento,
         areaAtuacao,
         temaIds,
+        colorScheme,
       });
 
       if (!resultado.ok) {
@@ -107,7 +111,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
   return (
     <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="nome" className="text-sm font-medium text-zinc-300">
+        <label htmlFor="nome" className="text-sm font-medium text-foreground-secondary">
           Nome completo
         </label>
         <input
@@ -123,7 +127,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-sm font-medium text-zinc-300">
+        <label htmlFor="email" className="text-sm font-medium text-foreground-secondary">
           E-mail
         </label>
         <input
@@ -140,7 +144,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="senha" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="senha" className="text-sm font-medium text-foreground-secondary">
             Senha
           </label>
           <input
@@ -156,7 +160,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="confirmarSenha" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="confirmarSenha" className="text-sm font-medium text-foreground-secondary">
             Confirmar senha
           </label>
           <input
@@ -177,7 +181,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="dataNascimento" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="dataNascimento" className="text-sm font-medium text-foreground-secondary">
             Data de nascimento
           </label>
           <input
@@ -191,7 +195,7 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="areaAtuacao" className="text-sm font-medium text-zinc-300">
+          <label htmlFor="areaAtuacao" className="text-sm font-medium text-foreground-secondary">
             Área de atuação
           </label>
           <select
@@ -199,13 +203,13 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
             required
             value={areaAtuacao}
             onChange={(e) => setAreaAtuacao(e.target.value)}
-            className={`${inputClass} ${areaAtuacao ? "text-zinc-100" : "text-zinc-500"}`}
+            className={`${inputClass} ${areaAtuacao ? "text-foreground" : "text-muted-foreground"}`}
           >
             <option value="" disabled>
               Selecione sua área de atuação
             </option>
             {AREAS_ATUACAO.map((area) => (
-              <option key={area} value={area} className="text-zinc-100">
+              <option key={area} value={area} className="text-foreground">
                 {area}
               </option>
             ))}
@@ -215,10 +219,10 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-zinc-300">Interesses</span>
+          <span className="text-sm font-medium text-foreground-secondary">Interesses</span>
           <span
             className={`text-xs font-medium ${
-              temaIds.length === MAX_TEMAS ? "text-blue-400" : "text-zinc-500"
+              temaIds.length === MAX_TEMAS ? "text-accent" : "text-muted-foreground"
             }`}
           >
             {temaIds.length}/{MAX_TEMAS} selecionados
@@ -236,10 +240,10 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
                 onClick={() => toggleTema(tema.id)}
                 className={`rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-inset transition ${
                   selecionado
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white ring-transparent"
+                    ? "bg-accent text-white ring-transparent"
                     : desabilitado
-                      ? "cursor-not-allowed text-zinc-600 ring-navy-800"
-                      : "text-zinc-300 ring-navy-700 hover:ring-navy-500"
+                      ? "cursor-not-allowed text-subtle-foreground ring-border"
+                      : "text-foreground-secondary ring-border-strong hover:ring-border-hover"
                 }`}
               >
                 {tema.nome}
@@ -249,19 +253,24 @@ export default function CadastroForm({ temas }: { temas: Tema[] }) {
         </div>
       </div>
 
+      <div className="flex flex-col gap-2">
+        <span className="text-sm font-medium text-foreground-secondary">Tema</span>
+        <ThemePicker value={colorScheme} onChange={setColorScheme} />
+      </div>
+
       {erro && <p className="text-sm text-red-400">{erro}</p>}
 
       <button
         type="submit"
         disabled={!podeEnviar}
-        className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {isPending ? "Criando conta..." : "Criar conta"}
       </button>
 
-      <p className="text-center text-sm text-zinc-400">
+      <p className="text-center text-sm text-muted-foreground">
         Já tem conta?{" "}
-        <Link href="/login" className="text-blue-400 hover:underline">
+        <Link href="/login" className="text-accent hover:underline">
           Entrar
         </Link>
       </p>
