@@ -19,7 +19,7 @@ export default function ConversationListItem({
     <Link
       href={`/conexoes?with=${id}`}
       className={`flex items-center gap-3 border-b border-border/60 px-4 py-3 transition ${
-        ativa ? "bg-surface-muted/60" : "hover:bg-surface-muted"
+        ativa ? "bg-surface-strong" : "hover:bg-surface-muted"
       }`}
     >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">

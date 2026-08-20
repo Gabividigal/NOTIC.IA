@@ -2,8 +2,8 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { Inbox } from "lucide-react";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import { contarPendencias } from "@/lib/conexoes";
+import { getUsuarioAtual } from "@/lib/usuarioAtual";
 import Logo from "@/components/Logo";
 import Navigation from "@/components/Navigation";
 import UserMenu from "@/components/UserMenu";
@@ -12,19 +12,7 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   const [usuario, pendencias] = await Promise.all([
-    session?.user
-      ? prisma.user.findUnique({
-          where: { id: session.user.id },
-          select: {
-            nome: true,
-            email: true,
-            areaAtuacao: true,
-            dataNascimento: true,
-            plano: true,
-            colorScheme: true,
-          },
-        })
-      : Promise.resolve(null),
+    getUsuarioAtual(),
     session?.user ? contarPendencias(session.user.id) : Promise.resolve(0),
   ]);
 

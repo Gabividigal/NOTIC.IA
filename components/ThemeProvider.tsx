@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type ColorScheme = "light" | "dark";
 
@@ -19,6 +19,10 @@ export function ThemeProvider({
   children: ReactNode;
 }) {
   const [theme, setThemeState] = useState<ColorScheme>(initialTheme);
+
+  useEffect(() => {
+    setThemeState(initialTheme);
+  }, [initialTheme]);
 
   function setTheme(novoTema: ColorScheme) {
     document.documentElement.classList.toggle("light", novoTema === "light");

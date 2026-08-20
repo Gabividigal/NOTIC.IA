@@ -60,7 +60,7 @@ export default function ChatPanel() {
                 className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
                   mensagem.autor === "usuario"
                     ? "bg-accent text-white"
-                    : "bg-surface-muted text-foreground-secondary"
+                    : "bg-surface-strong text-foreground-secondary"
                 }`}
               >
                 {mensagem.texto}

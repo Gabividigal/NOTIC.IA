@@ -28,15 +28,15 @@ enum ConnectionStatus {
 }
 
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
+  id             String      @id @default(cuid())
+  email          String      @unique
   nome           String
   senha          String
   dataNascimento DateTime
   areaAtuacao    String
-  plano          Plan     @default(FREE)
+  plano          Plan        @default(FREE)
   colorScheme    ColorScheme @default(DARK)
-  createdAt      DateTime @default(now())
+  createdAt      DateTime    @default(now())
 
   temas        UserTheme[]
   chatMessages ChatMessage[]
@@ -83,7 +83,7 @@ model News {
   createdAt      DateTime @default(now())
 
   themeId String
-  tema    Theme @relation(fields: [themeId], references: [id])
+  tema    Theme  @relation(fields: [themeId], references: [id])
 
   chatMessages ChatMessage[]
   readLaters   ReadLater[]
