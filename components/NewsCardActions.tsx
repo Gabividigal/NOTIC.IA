@@ -76,7 +76,9 @@ export default function NewsCardActions({
         aria-label={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
         title={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
         className={`rounded-full p-1.5 transition ${
-          favorito ? "text-pink-400" : "text-muted-foreground hover:text-foreground-secondary"
+          favorito
+            ? "text-pink-400 heart-icon--ativo"
+            : "text-muted-foreground hover:text-foreground-secondary"
         }`}
       >
         <Heart size={16} fill={favorito ? "currentColor" : "none"} />
