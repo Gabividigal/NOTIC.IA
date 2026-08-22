@@ -115,6 +115,20 @@ body {
   font-weight: 700;
 }
 
+/*
+ * Ícones de favoritar (coração) e ler depois (marcador) no tema escuro: usam
+ * os mesmos valores literais já usados no tema claro (:root.light acima),
+ * para que a cor seja idêntica nos dois temas. Não mexe em --muted-foreground
+ * nem --foreground-secondary, que são usados em outros elementos do app.
+ */
 :root:not(.light) .heart-icon--ativo {
-  color: var(--accent);
+  color: #be185d;
+}
+
+:root:not(.light) .card-icon-idle {
+  color: #71717a;
+}
+
+:root:not(.light) .card-icon-idle:hover {
+  color: #3f3f46;
 }
